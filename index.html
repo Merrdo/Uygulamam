@@ -94,6 +94,27 @@
     opacity: 1;
   }
 
+  /* Durum çubuğu perdesi: iOS'ta status bar "black-translucent" olduğu
+     için sayfalar onun ALTINA kayabiliyor — kaydırılan kartlar/metinler
+     saat ve ikonlarla üst üste binip okunmaz hale geliyordu (Ayarlar
+     sayfasında "Renk teması" başlığının saatle çakışması gibi). Bu katman
+     yalnızca çentik/durum çubuğu yüksekliği kadar (env(safe-area-inset-top))
+     tam genişlikte sabit durur ve o anki AKTİF TEMA rengiyle boyanır
+     (--theme-bg, JS tarafından tema değişince güncellenir), böylece altından
+     kayan içerik durum çubuğuna değmeden önce bu perdenin arkasında
+     kayboluyor — sabit siyah yerine temayla birlikte renk değiştirir. */
+  .safe-top-scrim {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top);
+    background: var(--theme-bg, #2b2f4a);
+    z-index: 35;
+    pointer-events: none;
+    transition: background-color 0.6s ease;
+  }
+
   /* Tema katmanlarının hemen üzerinde duran, isteğe bağlı ince doku
      (desen) katmanı. Rengi her zaman "currentColor" ile tanımlanır ve
      JS tarafından o an aktif temanın yazı rengine (--theme-text) göre,
@@ -1857,7 +1878,7 @@
     min-width: 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #121212;
   }
 
@@ -2372,7 +2393,7 @@
     padding: 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 0.92rem;
+    font-size: 1rem;
     line-height: 1.35;
     color: #121212;
     resize: none;
@@ -2399,7 +2420,7 @@
     padding: 0 0 1px;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 0.92rem;
+    font-size: 1rem;
     line-height: 1.35;
     color: #121212;
     resize: none;
@@ -2703,7 +2724,7 @@
     padding: 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 800;
-    font-size: 0.88rem;
+    font-size: 1rem;
     color: #121212;
   }
 
@@ -2983,7 +3004,7 @@
     padding: 0.55rem 0.7rem;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 0.88rem;
+    font-size: 1rem;
     color: #121212;
     background-color: #f2f2f2;
     border: 2.5px solid #000;
@@ -3972,7 +3993,7 @@
     text-align: center;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 800;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #121212;
     background-color: transparent;
     border: none;
@@ -4675,7 +4696,7 @@
     box-sizing: border-box;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #121212;
     background-color: #f2f2f2;
     border: 2.5px solid #000;
@@ -4981,7 +5002,7 @@
     box-sizing: border-box;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #121212;
     background-color: #f2f2f2;
     border: 2.5px solid #000;
@@ -6795,7 +6816,7 @@
     text-align: center;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #121212;
     background-color: #f2f2f2;
     border: 2.5px solid #000;
@@ -7925,6 +7946,7 @@
 <div class="theme-layer is-visible" id="themeLayerA"></div>
 <div class="theme-layer" id="themeLayerB"></div>
 <div class="pattern-layer" id="patternLayer"></div>
+<div class="safe-top-scrim" id="safeTopScrim" aria-hidden="true"></div>
 
 <div class="app">
 
@@ -9794,6 +9816,7 @@
 
   layerA.style.background = themes[themeIndex].gradient;
   document.documentElement.style.setProperty('--theme-text', themes[themeIndex].text);
+  document.documentElement.style.setProperty('--theme-bg', themes[themeIndex].gradient);
 
   const applyNextTheme = () => {
     themeIndex = (themeIndex + 1) % themes.length;
@@ -9804,6 +9827,7 @@
     visibleLayer.classList.remove('is-visible');
 
     document.documentElement.style.setProperty('--theme-text', theme.text);
+    document.documentElement.style.setProperty('--theme-bg', theme.gradient);
 
     const temp = visibleLayer;
     visibleLayer = hiddenLayer;
@@ -9834,6 +9858,7 @@
     visibleLayer.classList.remove('is-visible');
 
     document.documentElement.style.setProperty('--theme-text', theme.text);
+    document.documentElement.style.setProperty('--theme-bg', theme.gradient);
 
     const temp = visibleLayer;
     visibleLayer = hiddenLayer;
