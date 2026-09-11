@@ -94,27 +94,6 @@
     opacity: 1;
   }
 
-  /* Durum çubuğu perdesi: iOS'ta status bar "black-translucent" olduğu
-     için sayfalar onun ALTINA kayabiliyor — kaydırılan kartlar/metinler
-     saat ve ikonlarla üst üste binip okunmaz hale geliyordu (Ayarlar
-     sayfasında "Renk teması" başlığının saatle çakışması gibi). Bu katman
-     yalnızca çentik/durum çubuğu yüksekliği kadar (env(safe-area-inset-top))
-     tam genişlikte sabit durur ve o anki AKTİF TEMA rengiyle boyanır
-     (--theme-bg, JS tarafından tema değişince güncellenir), böylece altından
-     kayan içerik durum çubuğuna değmeden önce bu perdenin arkasında
-     kayboluyor — sabit siyah yerine temayla birlikte renk değiştirir. */
-  .safe-top-scrim {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: env(safe-area-inset-top);
-    background: var(--theme-bg, #2b2f4a);
-    z-index: 35;
-    pointer-events: none;
-    transition: background-color 0.6s ease;
-  }
-
   /* Tema katmanlarının hemen üzerinde duran, isteğe bağlı ince doku
      (desen) katmanı. Rengi her zaman "currentColor" ile tanımlanır ve
      JS tarafından o an aktif temanın yazı rengine (--theme-text) göre,
@@ -798,12 +777,6 @@
     color: #f2f2f4;
   }
 
-  body.is-anthracite .stopwatch-history-btn {
-    background-color: var(--dark-card-color, #3b3e42);
-    border-color: #000;
-    color: #f2f2f4;
-  }
-
   body.is-anthracite .delete-btn {
     background-color: var(--dark-card-color, #3b3e42);
     border-color: #000;
@@ -1074,23 +1047,6 @@
     color: #f2f2f4;
   }
 
-  /* Sayaç (geri sayım) kurulum kartı: Kronometre kartıyla aynı "Kart
-     Renkleri" temasını takip eder. */
-  body.is-anthracite .countdown-setup-card {
-    background: var(--dark-card-color, #3b3e42);
-  }
-
-  body.is-anthracite .countdown-setup-value,
-  body.is-anthracite .countdown-setup-colon,
-  body.is-anthracite .countdown-setup-label {
-    color: #f2f2f4;
-  }
-
-  body.is-anthracite .countdown-step-btn {
-    background-color: var(--dark-card-color, #3b3e42);
-    color: #f2f2f4;
-  }
-
   body.is-anthracite .calendar-back-btn,
   body.is-anthracite .calendar-nav-btn {
     background-color: var(--dark-card-color, #3b3e42);
@@ -1170,11 +1126,6 @@
      tekrar görünür oluyor. */
   body.is-anthracite .add-task-btn:active,
   body.is-anthracite .add-task-btn.is-pressed {
-    background-color: var(--accent-color, #ff90e8);
-  }
-
-  body.is-anthracite .stopwatch-history-btn:active,
-  body.is-anthracite .stopwatch-history-btn.is-pressed {
     background-color: var(--accent-color, #ff90e8);
   }
 
@@ -1878,7 +1829,7 @@
     min-width: 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #121212;
   }
 
@@ -2242,7 +2193,7 @@
   .page8-item-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.55rem;
     padding: 0 0.8rem 0.8rem;
   }
 
@@ -2346,9 +2297,6 @@
     text-decoration-thickness: 2px;
     text-decoration-color: transparent;
     transition: opacity 0.2s ease, text-decoration-color 0.2s ease;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: break-word;
   }
 
   .page8-item-row.is-done .page8-item-text {
@@ -2380,7 +2328,7 @@
 
   .page8-add-item-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     padding-top: 0.05rem;
   }
 
@@ -2393,13 +2341,8 @@
     padding: 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.35;
+    font-size: 0.92rem;
     color: #121212;
-    resize: none;
-    overflow: hidden;
-    white-space: pre-wrap;
-    word-break: break-word;
   }
 
   .page8-item-input::placeholder {
@@ -2420,7 +2363,7 @@
     padding: 0 0 1px;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.92rem;
     line-height: 1.35;
     color: #121212;
     resize: none;
@@ -2503,38 +2446,6 @@
   .page8-copy-toast.is-visible {
     opacity: 1;
     transform: translate(-50%, 0);
-  }
-
-  /* ---- Uygulama geneli bildirim (kayıt/yedekleme hataları ve onayları) ---- */
-  .app-toast {
-    position: fixed;
-    left: 50%;
-    bottom: 1.6rem;
-    z-index: 900;
-    max-width: calc(100% - 2.4rem);
-    padding: 0.65rem 1.2rem;
-    background: #121212;
-    color: #fff;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    line-height: 1.3;
-    text-align: center;
-    border-radius: 1.1rem;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, 10px);
-    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .app-toast.is-visible {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-
-  .app-toast.app-toast-error {
-    background: #d32f2f;
   }
 
   .page8-add-group-btn {
@@ -2724,7 +2635,7 @@
     padding: 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 0.88rem;
     color: #121212;
   }
 
@@ -2817,12 +2728,6 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.22s ease;
-    /* Pop-up açıkken arkadaki sayfanın kaydırma/rubber-band hareketiyle
-       birlikte hareket etmesini (iOS'ta sık görülen) engeller; sadece
-       kart içindeki .page9-add-card kendi overflow-y'siyle kaydırılabilir
-       kalır. */
-    touch-action: none;
-    overscroll-behavior: contain;
   }
 
   .page9-add-backdrop.is-open {
@@ -2835,10 +2740,6 @@
     max-width: 420px;
     max-height: 82vh;
     overflow-y: auto;
-    /* Kartın kendisi dikey olarak kaydırılabilir kalsın diye backdrop'un
-       "touch-action: none" kısıtlamasını burada geri açıyoruz. */
-    touch-action: pan-y;
-    overscroll-behavior: contain;
     background: #fff;
     border: 4px solid #000;
     border-radius: 1.1em;
@@ -3004,7 +2905,7 @@
     padding: 0.55rem 0.7rem;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.88rem;
     color: #121212;
     background-color: #f2f2f2;
     border: 2.5px solid #000;
@@ -3212,9 +3113,7 @@
   }
 
   .qhavuz-card-book {
-    display: flex;
-    align-items: baseline;
-    gap: 0.25rem;
+    display: block;
     padding: 0 0.6rem 0.6rem;
     margin-top: -0.3rem;
     font-family: "Space Grotesk", sans-serif;
@@ -3222,21 +3121,9 @@
     font-size: 0.68rem;
     color: #121212;
     opacity: 0.55;
-  }
-
-  /* Kitap adı uzunsa sadece bu kısım üç nokta ile kısalır; sayfa
-     sayısı (varsa) her zaman tam görünür kalır, aşağıda görüldüğü gibi
-     kesilip kaybolmaz. */
-  .qhavuz-card-book-name {
-    min-width: 0;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .qhavuz-card-book-page {
-    flex-shrink: 0;
-    white-space: nowrap;
   }
 
   .qhavuz-card-delete {
@@ -3932,13 +3819,9 @@
   }
 
   .page9-stepper-btn {
-    -webkit-appearance: none;
-    appearance: none;
-    box-sizing: border-box;
     flex-shrink: 0;
     width: 1.6rem;
     height: 1.85rem;
-    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3950,33 +3833,12 @@
     color: #121212;
     background-color: transparent;
     border: none;
-    border-radius: 0;
-    outline: none;
     cursor: pointer;
-    touch-action: manipulation;
-    transition: background-color 0.1s ease;
+    transition: background-color 0.15s ease;
   }
 
-  .page9-stepper-btn:active,
-  .page9-stepper-btn.is-pressed {
+  .page9-stepper-btn:active {
     background-color: var(--accent-color, #ff90e8);
-  }
-
-  /* .page9-stepper'ın kendisi overflow:hidden ile köşeleri yuvarlıyor,
-     ama içindeki eksi/artı butonlarının arka planı düz köşeli bir
-     dikdörtgen olduğu için köşelere yaklaşınca pembe dolgu ile dış
-     çerçevenin kavisi arasında ince bir boşluk (pill'in kendi gri
-     zemini) görünüyordu. En baştaki ve en sondaki butona, çerçevenin
-     kavisiyle birebir eşleşen bir iç yarıçap vererek bu boşluğu
-     kapatıyoruz; böylece pembe dolgu tam köşeye kadar oturuyor. */
-  .page9-stepper-btn:first-child {
-    border-top-left-radius: calc(0.65rem - 2.5px);
-    border-bottom-left-radius: calc(0.65rem - 2.5px);
-  }
-
-  .page9-stepper-btn:last-child {
-    border-top-right-radius: calc(0.65rem - 2.5px);
-    border-bottom-right-radius: calc(0.65rem - 2.5px);
   }
 
   /* "+" karakteri bu fontta optik olarak hafif yukarıda duruyor;
@@ -3993,7 +3855,7 @@
     text-align: center;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: #121212;
     background-color: transparent;
     border: none;
@@ -4696,7 +4558,7 @@
     box-sizing: border-box;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #121212;
     background-color: #f2f2f2;
     border: 2.5px solid #000;
@@ -4716,253 +4578,6 @@
   .page11-modal-confirm:hover {
     transform: translate(-1px, -1px);
     box-shadow: 4px 4px 0px 0px #000;
-  }
-
-  /* ---- "Kaynaklar" pop-up'ı: cevap anahtarı dosya/link seçici satırı
-     ve video linki alanı; page11-field/page11-field-input diliyle
-     uyumlu, sade ek kurallar. ---- */
-  .exam-resources-file-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .exam-resources-file-row.is-hidden {
-    display: none;
-  }
-
-  .exam-resources-file-btn {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    box-sizing: border-box;
-    padding: 0.55rem 0.7rem;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    color: #121212;
-    background-color: #f2f2f2;
-    border: 2.5px dashed #000;
-    border-radius: 0.7rem;
-    cursor: pointer;
-    transition: transform 0.15s ease, background-color 0.18s ease, border-style 0.15s ease;
-  }
-
-  .exam-resources-file-btn span {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .exam-resources-file-btn svg {
-    flex-shrink: 0;
-  }
-
-  .exam-resources-file-btn:active {
-    transform: translate(1px, 1px);
-  }
-
-  .exam-resources-file-btn.has-file {
-    border-style: solid;
-    background-color: #fff;
-  }
-
-  .exam-resources-file-remove {
-    flex-shrink: 0;
-  }
-
-  .exam-resources-file-remove.is-hidden {
-    display: none;
-  }
-
-  /* ---- Kaynaklar pop-up'ı: başlık altı açıklama, bölüm ikonları ve
-     iki alanı (cevap anahtarı / video linki) ayıran çizgi. Amaç,
-     pop-up'ı tek bakışta "ne işe yarıyor" ve "hangi alan ne bekliyor"
-     sorularına cevap verecek kadar açık hale getirmek. ---- */
-  .page11-modal-heading {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .page11-modal-subtitle {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 500;
-    font-size: 0.76rem;
-    line-height: 1.35;
-    color: rgba(18, 18, 18, 0.6);
-  }
-
-  .exam-resources-section {
-    gap: 0.5rem;
-  }
-
-  .exam-resources-section-label {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .exam-resources-section-label svg {
-    flex-shrink: 0;
-  }
-
-  .exam-resources-optional-tag {
-    margin-left: 0.4rem;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 600;
-    font-size: 0.62rem;
-    letter-spacing: 0;
-    text-transform: none;
-    color: rgba(18, 18, 18, 0.4);
-  }
-
-  .exam-resources-section-hint {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 500;
-    font-size: 0.72rem;
-    line-height: 1.3;
-    color: rgba(18, 18, 18, 0.45);
-  }
-
-  /* ---- Cevap Anahtarı sekmesi: artık Dosya/Link arasında geçiş yapan
-     bir anahtar yok; ikisi de alt alta, kendi küçük etiketleriyle
-     birlikte her zaman görünür. Aralarında ince bir "veya" ayracı
-     hangi alanın alternatif olduğunu gösterir. ---- */
-  .exam-resources-field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.32rem;
-  }
-
-  .exam-resources-field-label {
-    display: flex;
-    align-items: center;
-    font-family: "Archivo Expanded", "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.64rem;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: rgba(18, 18, 18, 0.45);
-  }
-
-  .exam-resources-or-divider {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.6rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: rgba(18, 18, 18, 0.3);
-  }
-
-  .exam-resources-or-divider::before,
-  .exam-resources-or-divider::after {
-    content: '';
-    flex: 1 1 auto;
-    height: 1.5px;
-    background-color: rgba(18, 18, 18, 0.14);
-  }
-
-  /* ---- Kaynaklar pop-up'ı üst sekmeleri: "Cevap Anahtarı" ve
-     "Video Çözümü" ayrı iki alan olarak sunulur, o an seçili olmayanın
-     alanı tamamen gizlenir; böylece pop-up her zaman tek bir işe
-     odaklı ve daha az kalabalık görünür. ---- */
-  .exam-resources-card {
-    max-width: 400px;
-  }
-
-  .exam-resources-tabs {
-    height: 52px;
-  }
-
-  .exam-resources-tab-btn {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.18rem;
-    padding: 0 0.2rem;
-  }
-
-  .exam-resources-tab-icon {
-    flex-shrink: 0;
-  }
-
-  .exam-resources-tab-label {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.66rem;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .exam-resources-tab-dot {
-    display: none;
-    position: absolute;
-    top: 0.3rem;
-    right: 0.45rem;
-    width: 0.4rem;
-    height: 0.4rem;
-    background-color: var(--accent-color, #ff90e8);
-    border: 1.5px solid #000;
-    border-radius: 50%;
-  }
-
-  .exam-resources-tab-btn.has-content .exam-resources-tab-dot {
-    display: block;
-  }
-
-  .exam-resources-panel {
-    display: none;
-    flex-direction: column;
-    gap: 0.55rem;
-    /* Sekme değişse de kartın boyu sabit kalsın diye her iki panel de
-       en dolu (Cevap Anahtarı) panelin ihtiyaç duyduğu yüksekliği
-       ayırır; Video Çözümü sekmesi bu alanın üstünde konumlanır. */
-    min-height: 200px;
-  }
-
-  .exam-resources-panel.is-active {
-    display: flex;
-  }
-
-  body.is-anthracite .page11-modal-subtitle,
-  body.is-anthracite .exam-resources-section-hint {
-    color: rgba(242, 242, 244, 0.55);
-  }
-
-  body.is-anthracite .exam-resources-optional-tag {
-    color: rgba(242, 242, 244, 0.4);
-  }
-
-  body.is-anthracite .exam-resources-field-label {
-    color: rgba(242, 242, 244, 0.5);
-  }
-
-  body.is-anthracite .exam-resources-or-divider {
-    color: rgba(242, 242, 244, 0.35);
-  }
-
-  body.is-anthracite .exam-resources-or-divider::before,
-  body.is-anthracite .exam-resources-or-divider::after {
-    background-color: rgba(242, 242, 244, 0.16);
-  }
-
-  body.is-anthracite .exam-resources-file-btn {
-    background-color: #2a2c2f;
-    color: #f2f2f4;
-    border-color: #f2f2f4;
-  }
-
-  body.is-anthracite .exam-resources-file-btn.has-file {
-    background-color: #1c1d1f;
   }
 
   /* ---------- Sayfa 8: yeni kategori/rutin grubu isim pop-up'ı
@@ -5002,7 +4617,7 @@
     box-sizing: border-box;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #121212;
     background-color: #f2f2f2;
     border: 2.5px solid #000;
@@ -5960,26 +5575,7 @@
   }
 
   /* ---------- Sayfa 5: Kronometre ---------- */
-
-  /* Kronometre <-> Sayaç (geri sayım) geçişini bir kart çevirme (flip)
-     animasyonuyla yapan sahne. Perspektif burada, dönen katman (inner)
-     ise bunun içinde tanımlanır; gizli başlık butonuna dokununca JS bu
-     katmanı 90°'ye döndürür, tam o an (görünmez kenar noktasında) içeriği
-     değiştirir ve geri döndürür — bir kartın çevrilmesi gibi görünür. */
-  .stopwatch-flip-stage {
-    width: 100%;
-    max-width: 340px;
-    perspective: 1200px;
-  }
-
-  .stopwatch-flip-inner {
-    width: 100%;
-    transform-style: preserve-3d;
-    will-change: transform;
-  }
-
   .stopwatch-page {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -5987,45 +5583,6 @@
     width: 100%;
     max-width: 340px;
     transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  /* Sayaç sayfasının (geri sayım) genel iskeleti; Kronometre kartıyla
-     birebir aynı görünümü paylaşır ama kendi çalışma durumuna (bkz.
-     body.is-countdown-running) göre gizlenir. */
-  .countdown-page {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.4rem;
-    width: 100%;
-    max-width: 340px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  body.is-countdown-running .countdown-page {
-    opacity: 0;
-    transform: scale(0.96);
-    pointer-events: none;
-  }
-
-  /* Başlık yazısının ("Kronometre"/"Sayaç") üzerine tam oturan, tamamen
-     görünmez gizli buton. Görsel olarak hiçbir iz bırakmaz; sadece o
-     yazıya dokununca modlar arası çevirme animasyonunu tetikler. */
-  .stopwatch-title-wrap {
-    position: relative;
-    display: inline-block;
-  }
-
-  .stopwatch-title-secret-btn {
-    position: absolute;
-    inset: -10px -8px;
-    background: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
   }
 
   /* Sayaç çalışırken bekleme kartı tamamen gizlenir; yerini tam ekran
@@ -6040,19 +5597,9 @@
     font-family: "Space Grotesk", sans-serif;
     font-weight: 800;
     font-size: 1.4rem;
-    text-align: left;
+    text-align: center;
     color: var(--theme-text, #f2f2f7);
     transition: color 0.5s ease;
-  }
-
-  /* Başlık ve Geçmiş butonunu aynı üst satırda tutan satır: başlık solda,
-     buton sağda. */
-  .stopwatch-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.6rem;
-    width: 100%;
   }
 
   .stopwatch-display {
@@ -6113,22 +5660,33 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    /* Sabit bir "gap" kullanmıyoruz: Turlarım/Sıfırla satırı görünür
+       olmadığında bu boşluğun da kaybolması gerekiyor ki Geçmiş butonu
+       yukarıda dursun; boşluk artık .stopwatch-controls-top'un kendi
+       max-height/margin geçişiyle kontrol ediliyor (aşağıya bakınız). */
   }
 
   /* Turlarım ve Sıfırla butonlarını eskisi gibi birbirine yakın ve
-     hizalı tutan üst satır. Bu satırın yüksekliği artık HER ZAMAN
-     sabittir (butonlar görünmese bile alan ayrılmış kalır); böylece
-     süre başlayıp/duraklayıp butonlar belirdiğinde ya da kaybolduğunda
-     kart ve üstündeki başlık yerinde sabit kalır, sadece butonların
-     kendisi (opacity/scale ile, bkz. .is-hidden) hareket eder. */
+     hizalı tutan üst satır. Süre sıfırken (Turlarım/Sıfırla gizliyken)
+     bu satırın kapladığı yükseklik ve altındaki boşluk da sıfırlanır,
+     böylece Geçmiş butonu yukarıda durur; süre birikip butonlar
+     belirdiğinde satır yumuşakça açılır ve Geçmiş aşağı kayar. */
   .stopwatch-controls-top {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     gap: 0.5rem;
+    overflow: hidden;
+    max-height: 5.5rem;
     padding: 0.3rem 0.3rem 0.5rem;
     margin-bottom: 0.6rem;
+    transition: max-height 0.3s ease, margin-bottom 0.3s ease;
+  }
+
+  .stopwatch-controls-top:has(.stopwatch-laps-btn.is-hidden) {
+    max-height: 0;
+    margin-bottom: 0;
   }
 
   .stopwatch-reset-btn {
@@ -6161,14 +5719,12 @@
     pointer-events: none;
   }
 
-  /* Kronometre Geçmişi (Sayfa 10) sayfasını açan buton: başlık satırında
-     sağda duran normal yazılı buton. Turlarım/Sıfırla'nın aksine süre
-     sıfır olsa da her zaman görünür, çünkü geçmiş kayıtlara sayaç
-     çalışmıyorken de bakılabilmeli. */
+  /* Kronometre Geçmişi (Sayfa 10) sayfasını açan buton; Turlarım/Sıfırla'nın
+     aksine süre sıfır olsa da her zaman görünür, çünkü geçmiş kayıtlara
+     sayaç çalışmıyorken de bakılabilmeli. */
   .stopwatch-history-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    flex-shrink: 0;
+    padding: 0.75rem 1.6rem;
+    font-size: 1.05rem;
   }
 
   /* Sayaç çalışırken devreye giren tam ekran görünüm: sayı sayacı,
@@ -6328,635 +5884,12 @@
     opacity: 0.5;
   }
 
-  /* ---- Sayaç (geri sayım) kurulum ekranı: dakika/saniye seçici ---- */
-  .countdown-setup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.4rem;
-    width: 100%;
-  }
-
-  .countdown-setup-card {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 1.6rem 1rem;
-    background: #fff;
-    border: 5px solid #000;
-    border-radius: 1.4em;
-    box-shadow: 8px 8px 0px 0px #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-  }
-
-  .countdown-setup-field {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .countdown-setup-value {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 900;
-    font-size: 2.1rem;
-    color: #121212;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-    min-width: 3.2ch;
-    text-align: center;
-  }
-
-  .countdown-setup-colon {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 900;
-    font-size: 2.1rem;
-    color: #121212;
-    align-self: center;
-    padding-bottom: 1.6rem;
-  }
-
-  .countdown-setup-label {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    color: #121212;
-    opacity: 0.5;
-  }
-
-  .countdown-step-btn {
-    width: 2.1rem;
-    height: 2.1rem;
-    border: 3px solid #000;
-    border-radius: 50%;
-    background: #fff;
-    color: #121212;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 3px 3px 0px 0px #000;
-    margin: 0.2rem 0;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-  }
-
-  .countdown-step-btn:active,
-  .countdown-step-btn.is-pressed {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px 0px #000;
-    background-color: var(--accent-color, #ff90e8);
-  }
-
-  .countdown-start-btn {
-    padding: 0.85rem 2.2rem;
-    font-size: 1.05rem;
-  }
-
-  /* Sayaç başlığının sağında duran bildirim sesi butonu: diğer daire
-     step butonlarının aksine köşeleri yumuşatılmış KARE, kronometrenin
-     rakam kartıyla aynı brütalist üslupta (kalın siyah çerçeve + gölge). */
-  .countdown-sound-btn {
-    width: 2.6rem;
-    height: 2.6rem;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border: 3px solid #000;
-    border-radius: 0.85rem;
-    box-shadow: 3px 3px 0px 0px #000;
-    color: #121212;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-  }
-
-  .countdown-sound-btn:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px 0px #000;
-    background-color: var(--accent-color, #ff90e8);
-  }
-
-  body.is-anthracite .countdown-sound-btn {
-    background-color: var(--dark-card-color, #3b3e42);
-    color: #f2f2f4;
-  }
-
-  /* ---- Ayar butonuyla açılan "Hazır Süreler" pop-up'ı: page9-add
-     ailesiyle aynı brütalist dili paylaşır, sadece daha geniş bir
-     kart ve ızgara halinde dizilen süre çipleri kullanır. ---- */
-  .countdown-presets-card {
-    max-width: 460px;
-    /* "Hazır Süreler" içindeki ekleme satırı (dk/sn/+) her zaman kartın
-       en altında sabit dursun diye kart artık başlık (sabit) - içerik
-       (esnek, gerekirse kendi içinde kayan) - ekleme satırı (sabit)
-       şeklinde dikey bir flex düzeni kullanıyor; kartın kendisi artık
-       kaymıyor, sadece .countdown-presets-grid-scroll kayıyor (bkz.
-       aşağıdaki kurallar). */
-    max-height: 82vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .countdown-presets-card .page9-add-header {
-    flex-shrink: 0;
-  }
-
-  .countdown-presets-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-shrink: 0;
-  }
-
-  /* "Düzenle" butonu: basılınca çiplerin silme çarpıları belirir/kaybolur
-     (bkz. .countdown-presets-grid.is-editing aşağıda ve script'teki
-     countdownPresetsEditBtn dinleyicisi). Aktifken "Bitti" yazısına ve
-     vurgu rengine döner. */
-  .countdown-presets-edit-btn {
-    flex-shrink: 0;
-    padding: 0.4rem 0.75rem;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 800;
-    font-size: 0.78rem;
-    color: #121212;
-    background-color: #f2f2f2;
-    border: 2.5px solid #000;
-    border-radius: 0.6rem;
-    box-shadow: 2px 2px 0px 0px #000;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
-  }
-
-  .countdown-presets-edit-btn:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px 0px #000;
-  }
-
-  .countdown-presets-edit-btn.is-active {
-    background-color: var(--accent-color, #ff90e8);
-  }
-
-  /* Bildirim butonu: Ayar (sayaç) ikonuyla aynı kare/köşeleri yumuşatılmış
-     brütalist dilde, ama pop-up başlığına uyacak küçük boyutta. */
-  .countdown-presets-notif-btn {
-    flex-shrink: 0;
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f2f2f2;
-    border: 2.5px solid #000;
-    border-radius: 0.55rem;
-    box-shadow: 2px 2px 0px 0px #000;
-    color: #121212;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
-  }
-
-  .countdown-presets-notif-btn:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px 0px #000;
-  }
-
-  .countdown-presets-notif-btn.is-active {
-    background-color: var(--accent-color, #ff90e8);
-  }
-
-  /* Bildirim panelinde ve başlıkta solup-belirme animasyonuyla oynatılan
-     yazılar; script bu elemanlara .cd-text-hidden sınıfını sırayla
-     ekleyip kaldırarak metinleri teker teker kaybedip belirtir. */
-  #countdownPresetsBackdrop .page9-add-title,
-  #countdownPresetsBackdrop .page9-add-subtitle,
-  #countdownPresetsBackdrop .countdown-preset-chip-time,
-  #countdownPresetsBackdrop .countdown-presets-empty,
-  .countdown-presets-soon-text {
-    transition: opacity 0.22s ease, transform 0.22s ease;
-  }
-
-  /* Aynı solup-belirme, yalnızca yazılarda değil; "Düzenle" butonu, her
-     hazır süre çipi ve ekleme satırı (girişler + "+" butonu) gibi
-     etkileşimli elemanlarda da geçerli olsun diye bunlara da opacity/
-     transform geçişi eklenir. Böylece bildirim butonuna basılınca tüm
-     içerik (yazı + buton fark etmeksizin) aynı yumuşak, sıralı geçişle
-     kaybolur/belirir; script'teki collectCountdownPresetsFadeEls bu
-     elemanları da .cd-text-hidden ile sırayla açıp kapatır. */
-  #countdownPresetsBackdrop .countdown-presets-edit-btn,
-  #countdownPresetsBackdrop .countdown-preset-chip,
-  #countdownPresetsBackdrop .countdown-presets-add-row {
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.18s ease, opacity 0.22s ease;
-  }
-
-  .cd-text-hidden {
-    opacity: 0 !important;
-    transform: translateY(4px);
-  }
-
-  .countdown-presets-body {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
-    min-height: 0;
-  }
-
-  /* Hazır süre çipleri çoğalınca sarmalayıcı (.countdown-presets-body)
-     yukarı doğru büyümek yerine kendi içinde kayar; böylece altındaki
-     ekleme satırı (dk/sn/+) hep aynı yerde, kartın en altında sabit
-     kalır. Silme çarpısı çipin -0.55rem taşan köşesi kırpılmasın diye
-     etrafına küçük bir tampon (padding) ekleyip aynı miktarda negatif
-     margin ile görsel konumu koruyoruz. */
-  .countdown-presets-grid-scroll {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    margin: -0.6rem;
-    padding: 0.6rem;
-  }
-
-  /* Body (ızgara + ekleme satırı) ile bildirim panelinin ortak sarmalayıcısı.
-     Bildirim butonuna basılınca içerik değişse de (body <-> "Yakında"
-     paneli) pop-up'ın toplam yüksekliği sabit kalsın diye, script bu
-     elemana o an gösterilen içeriğin en büyük doğal yüksekliğini
-     min-height olarak yazar (bkz. syncCountdownPresetsContentHeight). */
-  .countdown-presets-content {
-    position: relative;
-    flex: 1 1 auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .countdown-presets-soon {
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    min-height: 150px;
-  }
-
-  .countdown-presets-soon-text {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 800;
-    font-size: 1.3rem;
-    color: #121212;
-  }
-
-  /* ---- Bildirim paneli: sayaç bitiş sesi listesi ---- */
-  .countdown-sounds-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    width: 100%;
-  }
-
-  .countdown-sound-row {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.5rem 0.65rem;
-    background-color: #f2f2f2;
-    border: 2.5px solid #000;
-    border-radius: 0.65rem;
-    box-shadow: 2px 2px 0px 0px #000;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.18s ease, opacity 0.22s ease;
-  }
-
-  .countdown-sound-row:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px 0px #000;
-  }
-
-  .countdown-sound-row.is-selected {
-    background-color: var(--accent-color, #ff90e8);
-  }
-
-  .countdown-sound-play-btn {
-    flex-shrink: 0;
-    width: 1.9rem;
-    height: 1.9rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    border: 2px solid #000;
-    border-radius: 50%;
-    color: #121212;
-    cursor: pointer;
-    transition: transform 0.15s ease;
-  }
-
-  .countdown-sound-play-btn:active {
-    transform: translate(1px, 1px);
-  }
-
-  .countdown-sound-name {
-    flex: 1;
-    min-width: 0;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #121212;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .countdown-sound-check {
-    flex-shrink: 0;
-    width: 1.3rem;
-    height: 1.3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    border: 2px solid #000;
-    border-radius: 50%;
-    color: #121212;
-  }
-
-  .countdown-sound-check svg {
-    opacity: 0;
-    transition: opacity 0.15s ease;
-  }
-
-  .countdown-sound-row.is-selected .countdown-sound-check svg {
-    opacity: 1;
-  }
-
-  body.is-anthracite .countdown-sound-row {
-    background-color: #2a2c2f;
-  }
-
-  body.is-anthracite .countdown-sound-name {
-    color: #f2f2f4;
-  }
-
-  body.is-anthracite .countdown-sound-play-btn,
-  body.is-anthracite .countdown-sound-check {
-    background-color: #1c1d1f;
-    color: #f2f2f4;
-  }
-
-  body.is-anthracite .countdown-presets-notif-btn {
-    background-color: #2a2c2f;
-    color: #f2f2f4;
-  }
-
-  body.is-anthracite .countdown-presets-soon-text {
-    color: #f2f2f4;
-  }
-
-  .countdown-presets-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.6rem;
-  }
-
-  .countdown-preset-chip {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem 0.4rem;
-    background-color: #f2f2f2;
-    border: 2.5px solid #000;
-    border-radius: 0.75rem;
-    box-shadow: 3px 3px 0px 0px #000;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.18s ease;
-  }
-
-  .countdown-preset-chip:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px 0px #000;
-    background-color: var(--accent-color, #ff90e8);
-  }
-
-  .countdown-preset-chip-time {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 800;
-    font-size: 0.92rem;
-    color: #121212;
-  }
-
-  /* Silme çarpısı varsayılan olarak gizli; yalnızca "Düzenle" ile
-     açılan .is-editing modunda görünür olur. Aniden görünüp kaybolmak
-     yerine (display:none/flex sert geçişi) opacity+scale ile yumuşak
-     biçimde belirip kaybolsun diye display her zaman flex bırakılıp
-     görünürlük opacity/pointer-events üzerinden yönetiliyor; geçiş
-     .delete-btn'in kendi "transition: transform..., opacity..." kuralı
-     üzerinden yürüyor. */
-  .countdown-preset-chip-delete {
-    display: flex;
-    position: absolute;
-    top: -0.55rem;
-    right: -0.55rem;
-    width: 1.45rem;
-    height: 1.45rem;
-    font-size: 0.8rem;
-    border-width: 2.5px;
-    box-shadow: 2px 2px 0px 0px #000;
-    opacity: 0;
-    transform: scale(0.6);
-    pointer-events: none;
-  }
-
-  .countdown-presets-grid.is-editing .countdown-preset-chip-delete {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-  }
-
-  .countdown-presets-grid.is-editing .countdown-preset-chip {
-    animation: countdownPresetWiggle 0.22s ease-in-out infinite alternate;
-  }
-
-  @keyframes countdownPresetWiggle {
-    from { transform: rotate(-0.6deg); }
-    to { transform: rotate(0.6deg); }
-  }
-
-  .countdown-presets-empty {
-    grid-column: 1 / -1;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 600;
-    font-size: 0.82rem;
-    color: #121212;
-    opacity: 0.5;
-    text-align: center;
-    padding: 0.7rem 0;
-  }
-
-  .countdown-presets-add-row {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 1.1rem;
-    flex-shrink: 0;
-  }
-
-  .countdown-presets-add-field {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-
-  .countdown-presets-add-input {
-    width: 100%;
-    padding: 0.55rem 0.5rem;
-    text-align: center;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: #121212;
-    background-color: #f2f2f2;
-    border: 2.5px solid #000;
-    border-radius: 0.65rem;
-    box-shadow: 3px 3px 0px 0px #000;
-    outline: none;
-    -moz-appearance: textfield;
-  }
-
-  .countdown-presets-add-input::-webkit-outer-spin-button,
-  .countdown-presets-add-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* dk/sn giriş kutularının arasındaki ":" — .countdown-setup-colon'un
-     aksine (o, büyük kurulum kartına göre boyutlanmış), bu satırdaki
-     kutularla aynı hizada, dikeyde ortalanmış küçük bir işaret. */
-  .countdown-presets-add-colon {
-    flex-shrink: 0;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 900;
-    font-size: 1.2rem;
-    line-height: 1;
-    color: #121212;
-  }
-
-  body.is-anthracite .countdown-preset-chip {
-    background-color: #2a2c2f;
-  }
-
-  body.is-anthracite .countdown-preset-chip-time,
-  body.is-anthracite .countdown-presets-empty,
-  body.is-anthracite .countdown-presets-add-colon {
-    color: #f2f2f4;
-  }
-
-  body.is-anthracite .countdown-presets-add-input {
-    background-color: #2a2c2f;
-    color: #f2f2f4;
-  }
-
-  body.is-anthracite .countdown-presets-edit-btn {
-    background-color: #2a2c2f;
-    color: #f2f2f4;
-  }
-
-  /* ---- Sayaç tam ekran görünümü: Kronometre'nin tam ekranıyla aynı
-     görsel dilde ama kendi (is-countdown-running) durumuna bağlı. ---- */
-  .countdown-fullscreen {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.9rem;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right)
-      env(safe-area-inset-bottom) env(safe-area-inset-left);
-    z-index: 60;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.9);
-    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  body.is-countdown-running .countdown-fullscreen {
-    opacity: 1;
-    pointer-events: auto;
-    transform: scale(1);
-  }
-
-  body.is-countdown-running .countdown-fullscreen:active {
-    transform: scale(0.97);
-  }
-
-  .countdown-fullscreen-time-row {
-    position: relative;
-    display: flex;
-    align-items: baseline;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 900;
-    color: var(--theme-text, #f2f2f7);
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-    transition: color 0.5s ease;
-  }
-
-  .countdown-fullscreen-time-row .stopwatch-time {
-    font-size: clamp(2.6rem, 15vw, 5.4rem);
-    letter-spacing: 0.01em;
-  }
-
-  .countdown-fullscreen-hint {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    color: var(--theme-text, #f2f2f7);
-    opacity: 0.4;
-    transition: color 0.5s ease, opacity 0.4s ease;
-    text-align: center;
-  }
-
-  .countdown-fullscreen-hint.is-hidden {
-    opacity: 0;
-  }
-
-  .countdown-exit-zone {
-    position: absolute;
-    inset: -1.4rem -1rem;
-    z-index: 5;
-    cursor: pointer;
-  }
-
-  /* Süre dolduğunda: 3 kere zıplar (0.6s x 3 = 1.8s), sonra 1 saniye
-     düz durur, ardından bu döngü (toplam 2.8s) sonsuza kadar tekrar eder. */
-  @keyframes countdownFinishedPulse {
-    0%      { transform: scale(1); }
-    10.71%  { transform: scale(1.08); }
-    21.43%  { transform: scale(1); }
-    32.14%  { transform: scale(1.08); }
-    42.86%  { transform: scale(1); }
-    53.57%  { transform: scale(1.08); }
-    64.29%  { transform: scale(1); }
-    100%    { transform: scale(1); }
-  }
-
-  body.is-countdown-finished .countdown-fullscreen-time-row .stopwatch-time {
-    color: #ff5c5c;
-    animation: countdownFinishedPulse 2.8s ease-in-out infinite;
-  }
-
   /* Sayaç çalışırken alt nav bar tamamen gizlenir. */
   .navbar {
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   body.is-stopwatch-running .navbar,
-  body.is-countdown-running .navbar,
   body.is-laps-open .navbar,
   body.is-patterns-open .navbar,
   body.is-exam-detail-open .navbar,
@@ -6971,7 +5904,6 @@
   }
 
   body.is-stopwatch-running .navbar .wrapper,
-  body.is-countdown-running .navbar .wrapper,
   body.is-laps-open .navbar .wrapper,
   body.is-patterns-open .navbar .wrapper,
   body.is-exam-detail-open .navbar .wrapper,
@@ -7062,37 +5994,6 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  /* Aynı grup mantığı sol tarafta: geri butonunun yanına "Kaynaklar"
-     (cevap anahtarı / video çözümü) butonu eklemek için. */
-  .calendar-topbar-left-group {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  /* Bir denemeye cevap anahtarı veya video linki eklenmişse, "Kaynaklar"
-     butonunun köşesinde küçük bir nokta belirir. */
-  .exam-detail-resources-dot {
-    display: none;
-    position: absolute;
-    top: -0.15rem;
-    right: -0.15rem;
-    width: 0.65rem;
-    height: 0.65rem;
-    background-color: var(--accent-color, #ff90e8);
-    border: 2px solid #000;
-    border-radius: 50%;
-  }
-
-  #examDetailResourcesBtn {
-    position: relative;
-  }
-
-  #examDetailResourcesBtn.has-resources .exam-detail-resources-dot {
-    display: block;
   }
 
   /* Soru kutucuklarındaki kamera rozetlerini göster/gizle butonu:
@@ -7720,35 +6621,6 @@
     background-color: #ff5c5c;
   }
 
-  /* ---------- Dışa/İçe aktar butonları (Sıfırla ile aynı brütalist stil,
-     ancak tehlikeli olmadıkları için hover'da kırmızı değil nötr gri) ---------- */
-  .settings-outline-btn {
-    flex-shrink: 0;
-    padding: 0.6rem 1rem;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 800;
-    font-size: 0.88rem;
-    color: #121212;
-    background-color: #fff;
-    border: 3px solid #000;
-    border-radius: 0.8rem;
-    box-shadow: 3px 3px 0px 0px #000;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
-  }
-
-  .settings-outline-btn:hover {
-    transform: translate(-1px, -1px);
-    box-shadow: 4px 4px 0px 0px #000;
-    background-color: #e4e4e4;
-  }
-
-  .settings-outline-btn:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px 0px #000;
-    background-color: #e4e4e4;
-  }
-
   .settings-footer {
     text-align: center;
     padding: 0.4rem 0 0.2rem;
@@ -7767,11 +6639,7 @@
   .settings-confirm-backdrop {
     position: fixed;
     inset: 0;
-    /* Diğer pop-up'ların (z-index 40) üzerinden, bir pop-up içinden
-       açıldığında da (ör. "Ders Ekle" pop-up'ındaki silme onayı) her
-       zaman en üstte görünsün diye takvim pop-up'ıyla aynı 60 katmanı
-       kullanılıyor. */
-    z-index: 60;
+    z-index: 40;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7916,12 +6784,6 @@
     color: #f2f2f4;
   }
 
-  body.is-anthracite .settings-outline-btn {
-    background-color: var(--dark-card-color, #3b3e42);
-    border-color: #000;
-    color: #f2f2f4;
-  }
-
   body.is-anthracite .settings-confirm-card {
     background: var(--dark-card-color, #3b3e42);
   }
@@ -7946,7 +6808,6 @@
 <div class="theme-layer is-visible" id="themeLayerA"></div>
 <div class="theme-layer" id="themeLayerB"></div>
 <div class="pattern-layer" id="patternLayer"></div>
-<div class="safe-top-scrim" id="safeTopScrim" aria-hidden="true"></div>
 
 <div class="app">
 
@@ -8061,99 +6922,28 @@
   </section>
 
   <section class="page" id="page-5">
-    <!-- Kronometre <-> Sayaç: iki görünüm de aynı "çevirme sahnesi"
-         içinde tutulur; başlık yazısının üzerindeki görünmez gizli
-         butona dokununca JS bu sahneyi döndürerek (flip) diğer görünüme
-         geçer (bkz. flipStopwatchViewMode). -->
-    <div class="stopwatch-flip-stage">
-      <div class="stopwatch-flip-inner" id="stopwatchFlipInner">
+    <!-- Kronometre: sayaç çalışırken sadece rakam kartı ekranda kalır,
+         başlık, butonlar ve alt nav bar (is-stopwatch-running sınıfıyla) gizlenir. -->
+    <div class="stopwatch-page" id="stopwatchPage">
+      <h1 class="stopwatch-title">Kronometre</h1>
 
-        <!-- Kronometre: sayaç çalışırken sadece rakam kartı ekranda kalır,
-             başlık, butonlar ve alt nav bar (is-stopwatch-running sınıfıyla) gizlenir. -->
-        <div class="stopwatch-page" id="stopwatchPage">
-          <!-- Başlık solda, Geçmiş butonu sağda: aynı üst satırda yan yana. -->
-          <div class="stopwatch-header">
-            <div class="stopwatch-title-wrap">
-              <h1 class="stopwatch-title">Kronometre</h1>
-              <!-- Gizli buton: görsel olarak tamamen görünmezdir; başlık
-                   yazısına dokununca dönme animasyonuyla Sayaç sayfasına geçer. -->
-              <button type="button" class="stopwatch-title-secret-btn" id="stopwatchTitleSecretBtn" tabindex="-1" aria-hidden="true"></button>
-            </div>
-            <button type="button" class="add-task-btn stopwatch-history-btn" id="stopwatchHistoryBtn">Geçmiş</button>
-          </div>
-
-          <div class="stopwatch-display" id="stopwatchDisplay" role="button" tabindex="0" aria-label="Kronometreyi başlat veya duraklat">
-            <div class="stopwatch-time-row">
-              <span class="stopwatch-time" id="stopwatchTime">00:00:00</span><span class="stopwatch-centis" id="stopwatchCentis">.00</span>
-            </div>
-            <span class="stopwatch-hint" id="stopwatchHint">Başlatmak için dokun</span>
-          </div>
-
-          <div class="stopwatch-controls" id="stopwatchControls">
-            <div class="stopwatch-controls-top">
-              <button type="button" class="add-task-btn stopwatch-laps-btn is-hidden" id="stopwatchLapsBtn">Turlarım</button>
-              <button type="button" class="add-task-btn stopwatch-reset-btn is-hidden" id="stopwatchResetBtn">Sıfırla</button>
-            </div>
-          </div>
+      <div class="stopwatch-display" id="stopwatchDisplay" role="button" tabindex="0" aria-label="Kronometreyi başlat veya duraklat">
+        <div class="stopwatch-time-row">
+          <span class="stopwatch-time" id="stopwatchTime">00:00:00</span><span class="stopwatch-centis" id="stopwatchCentis">.00</span>
         </div>
+        <span class="stopwatch-hint" id="stopwatchHint">Başlatmak için dokun</span>
+      </div>
 
-        <!-- Sayaç (geri sayım): gizli buton ile açılan alternatif mod.
-             Önce süre seçilir (kurulum), "Başlat" ile geri saymaya başlar. -->
-        <div class="countdown-page" id="countdownPage" style="display:none;">
-          <div class="stopwatch-header">
-            <div class="stopwatch-title-wrap">
-              <h1 class="stopwatch-title">Sayaç</h1>
-              <!-- Aynı gizli mekanizma: bu yazıya dokununca Kronometre'ye geri döner. -->
-              <button type="button" class="stopwatch-title-secret-btn" id="countdownTitleSecretBtn" tabindex="-1" aria-hidden="true"></button>
-            </div>
-            <!-- Ayar butonu: dokununca hazır süreler pop-up'ını açar
-                 (bkz. #countdownPresetsBackdrop ve script'teki
-                 openCountdownPresets). -->
-            <button type="button" class="countdown-sound-btn" id="countdownSoundBtn" aria-label="Hazır süreler">
-              <svg viewBox="0 0 24 24" width="18" height="18">
-                <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
-
-          <div class="countdown-setup" id="countdownSetup">
-            <div class="countdown-setup-card">
-              <div class="countdown-setup-field">
-                <button type="button" class="countdown-step-btn" id="countdownMinUpBtn" aria-label="Dakika artır">+</button>
-                <span class="countdown-setup-value" id="countdownMinValue">05</span>
-                <button type="button" class="countdown-step-btn" id="countdownMinDownBtn" aria-label="Dakika azalt">−</button>
-                <span class="countdown-setup-label">dk</span>
-              </div>
-              <span class="countdown-setup-colon">:</span>
-              <div class="countdown-setup-field">
-                <button type="button" class="countdown-step-btn" id="countdownSecUpBtn" aria-label="Saniye artır">+</button>
-                <span class="countdown-setup-value" id="countdownSecValue">00</span>
-                <button type="button" class="countdown-step-btn" id="countdownSecDownBtn" aria-label="Saniye azalt">−</button>
-                <span class="countdown-setup-label">sn</span>
-              </div>
-            </div>
-            <button type="button" class="add-task-btn countdown-start-btn" id="countdownStartBtn">Başlat</button>
-          </div>
-
-          <div class="stopwatch-display" id="countdownDisplay" role="button" tabindex="0" aria-label="Sayacı duraklat veya devam ettir" style="display:none;">
-            <div class="stopwatch-time-row">
-              <span class="stopwatch-time" id="countdownTime">05:00</span>
-            </div>
-            <span class="stopwatch-hint" id="countdownHint">Duraklatmak için dokun</span>
-          </div>
-
-          <div class="stopwatch-controls" id="countdownControls" style="display:none;">
-            <div class="stopwatch-controls-top">
-              <button type="button" class="add-task-btn stopwatch-reset-btn" id="countdownResetBtn">Sıfırla</button>
-            </div>
-          </div>
+      <div class="stopwatch-controls" id="stopwatchControls">
+        <div class="stopwatch-controls-top">
+          <button type="button" class="add-task-btn stopwatch-laps-btn is-hidden" id="stopwatchLapsBtn">Turlarım</button>
+          <button type="button" class="add-task-btn stopwatch-reset-btn is-hidden" id="stopwatchResetBtn">Sıfırla</button>
         </div>
-
+        <button type="button" class="add-task-btn stopwatch-history-btn" id="stopwatchHistoryBtn">Geçmiş</button>
       </div>
     </div>
 
-    <!-- Kronometre çalışırken beliren, ekranı tam kaplayan büyük görünüm.
+    <!-- Sayaç çalışırken beliren, ekranı tam kaplayan büyük görünüm.
          Sayının üzerindeki görünmez alana dokunmak duraklatıp tam
          ekrandan çıkar; boş bir alana dokununca Tur butonu belirir. -->
     <div class="stopwatch-fullscreen" id="stopwatchFullscreen">
@@ -8168,15 +6958,6 @@
         <button type="button" class="add-task-btn stopwatch-lap-btn" id="stopwatchLapBtn">Tur</button>
         <div class="stopwatch-laps" id="stopwatchLaps"></div>
       </div>
-    </div>
-
-    <!-- Sayaç (geri sayım) çalışırken beliren tam ekran görünüm. -->
-    <div class="countdown-fullscreen" id="countdownFullscreen">
-      <div class="countdown-fullscreen-time-row">
-        <span class="stopwatch-time" id="countdownTimeFull">05:00</span>
-        <div class="countdown-exit-zone" id="countdownExitZone" role="button" tabindex="0" aria-label="Sayacı duraklat ve tam ekrandan çık"></div>
-      </div>
-      <span class="countdown-fullscreen-hint" id="countdownFullscreenHint">Duraklatmak için dokun</span>
     </div>
   </section>
 
@@ -8345,29 +7126,8 @@
         <div class="settings-card">
           <div class="settings-row">
             <div class="settings-row-text">
-              <span class="settings-row-title">Yedeği dışa aktar</span>
-              <span class="settings-row-desc">Tüm verilerini (görseller dahil) bir dosyaya kaydet</span>
-            </div>
-            <button type="button" class="settings-outline-btn" id="settingsExportBtn">Dışa Aktar</button>
-          </div>
-
-          <div class="settings-divider"></div>
-
-          <div class="settings-row">
-            <div class="settings-row-text">
-              <span class="settings-row-title">Yedeği içe aktar</span>
-              <span class="settings-row-desc">Başka bir cihazdan aldığın yedeği bu cihaza yükle</span>
-            </div>
-            <button type="button" class="settings-outline-btn" id="settingsImportBtn">İçe Aktar</button>
-            <input type="file" id="settingsImportFileInput" class="qhavuz-file-input" accept="application/json,.json">
-          </div>
-
-          <div class="settings-divider"></div>
-
-          <div class="settings-row">
-            <div class="settings-row-text">
               <span class="settings-row-title">Tüm verileri sıfırla</span>
-              <span class="settings-row-desc">Görevler, tema ve kayıtlar silinir. Önce yedek almanı öneririz.</span>
+              <span class="settings-row-desc">Görevler, tema ve kayıtlar silinir</span>
             </div>
             <button type="button" class="settings-danger-btn" id="settingsResetBtn">Sıfırla</button>
           </div>
@@ -8392,18 +7152,6 @@
     </div>
   </div>
 
-  <!-- Ayarlar: yedek içe aktarma onay pop-up'ı -->
-  <div class="settings-confirm-backdrop" id="importConfirmBackdrop">
-    <div class="settings-confirm-card">
-      <span class="settings-confirm-title">Emin misin?</span>
-      <span class="settings-confirm-desc">Seçtiğin yedek dosyası, bu cihazdaki mevcut tüm verilerin (görevler, tema, görseller) üzerine yazılacak. Bu işlem geri alınamaz.</span>
-      <div class="settings-confirm-actions">
-        <button type="button" class="settings-confirm-cancel" id="importConfirmCancel">Vazgeç</button>
-        <button type="button" class="settings-confirm-confirm" id="importConfirmConfirm">Evet, içe aktar</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Sayfa 8: grup/kategori silme onay pop-up'ı (Ayarlar'daki sıfırlama
        onayıyla aynı brutalist stil, farklı id'lerle genel amaçlı) -->
   <div class="settings-confirm-backdrop" id="stopwatchResetConfirmBackdrop">
@@ -8413,60 +7161,6 @@
       <div class="settings-confirm-actions">
         <button type="button" class="settings-confirm-cancel" id="stopwatchResetConfirmCancel">Vazgeç</button>
         <button type="button" class="settings-confirm-confirm" id="stopwatchResetConfirmConfirm">Evet, sıfırla</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Sayaç (geri sayım) sayfasındaki Ayar butonuyla açılan pop-up:
-       hazır süreler ızgara halinde dizilir, dokununca doğrudan sayaca
-       uygulanır; her çipin sağ üstünde silme butonu, altta da yeni bir
-       hazır süre eklemek için dk/sn girişleri bulunur. -->
-  <div class="page9-add-backdrop" id="countdownPresetsBackdrop">
-    <div class="page9-add-card countdown-presets-card">
-      <div class="page9-add-header">
-        <div class="page9-add-heading">
-          <span class="page9-add-title">Hazır Süreler</span>
-          <span class="page9-add-subtitle">Dokununca sayaca uygulanır</span>
-        </div>
-        <div class="countdown-presets-header-actions">
-          <button type="button" class="countdown-presets-edit-btn" id="countdownPresetsEditBtn">Düzenle</button>
-          <!-- Bildirim butonu: basılınca aşağıdaki içerik ve başlıktaki
-               yazılar sırayla solup kaybolur, yerine "Yakında" yazısı
-               aynı sıralı beliriş animasyonuyla gelir (bkz. script'teki
-               showCountdownPresetsNotif / hideCountdownPresetsNotif). -->
-          <button type="button" class="countdown-presets-notif-btn" id="countdownPresetsNotifBtn" aria-label="Bildirimler">
-            <svg viewBox="0 0 24 24" width="15" height="15">
-              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button type="button" class="delete-btn page9-add-close" id="countdownPresetsClose" aria-label="Kapat">×</button>
-        </div>
-      </div>
-
-      <div class="countdown-presets-content" id="countdownPresetsContent">
-        <div class="countdown-presets-body" id="countdownPresetsBody">
-          <div class="countdown-presets-grid-scroll" id="countdownPresetsGridScroll">
-            <div class="countdown-presets-grid" id="countdownPresetsGrid"></div>
-          </div>
-
-          <div class="countdown-presets-add-row" id="countdownPresetsAddRow">
-            <div class="countdown-presets-add-field">
-              <input type="number" inputmode="numeric" class="countdown-presets-add-input" id="countdownPresetAddMin" placeholder="dk" min="0" max="180">
-            </div>
-            <span class="countdown-presets-add-colon">:</span>
-            <div class="countdown-presets-add-field">
-              <input type="number" inputmode="numeric" class="countdown-presets-add-input" id="countdownPresetAddSec" placeholder="sn" min="0" max="59">
-            </div>
-            <button type="button" class="page9-add-custom-btn" id="countdownPresetAddBtn" aria-label="Hazır süre ekle">+</button>
-          </div>
-        </div>
-
-        <!-- Bildirim paneli: sayaç bitince çalacak sesin seçildiği liste.
-             Satırlar script tarafından (renderCountdownSoundsList) COUNTDOWN_SOUND_OPTIONS'tan üretilir. -->
-        <div class="countdown-presets-soon" id="countdownPresetsSoon">
-          <div class="countdown-sounds-list" id="countdownSoundsList"></div>
-        </div>
       </div>
     </div>
   </div>
@@ -8690,22 +7384,11 @@
   <section class="page" id="page-11-detail">
     <div class="exam-detail-wrap">
       <div class="calendar-topbar">
-        <div class="calendar-topbar-left-group">
-          <button type="button" class="calendar-back-btn" id="examDetailBackBtn" aria-label="Geri dön">
-            <svg viewBox="0 0 24 24" width="18" height="18">
-              <path d="M15 4l-8 8 8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button type="button" class="calendar-back-btn" id="examDetailResourcesBtn" aria-label="Cevap anahtarı ve video çözümü ekle">
-            <svg viewBox="0 0 24 24" width="18" height="18">
-              <circle cx="7.3" cy="16.7" r="3.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M9.5 14.5L17.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M14.3 9.7l2.3 2.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16.4 7.6l2.3 2.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="exam-detail-resources-dot" id="examDetailResourcesDot"></span>
-          </button>
-        </div>
+        <button type="button" class="calendar-back-btn" id="examDetailBackBtn" aria-label="Geri dön">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path d="M15 4l-8 8 8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
         <span class="calendar-topbar-title" id="examDetailTitle">Deneme</span>
         <div class="calendar-topbar-right-group">
           <button type="button" class="calendar-back-btn" id="examDetailPhotoToggleBtn" aria-label="Soru görsellerini gizle" aria-pressed="true">
@@ -8935,79 +7618,6 @@
     </div>
   </div>
 
-  <!-- Sayfa 11 Detay: üst çubuktaki "Kaynaklar" butonuyla açılan pop-up.
-       Cevap anahtarını dosya (PDF/görsel) veya link olarak, video çözümü
-       linkini de ayrı bir alanda saklar; page11AddBackdrop ile aynı
-       kart dilini kullanır. -->
-  <div class="settings-confirm-backdrop" id="examResourcesBackdrop">
-    <div class="page11-modal-card exam-resources-card">
-      <div class="page11-modal-heading">
-        <span class="page11-modal-title">Kaynaklar</span>
-        <span class="page11-modal-subtitle">Bu denemenin cevap anahtarını ve video çözümünü ekle</span>
-      </div>
-
-      <div class="settings-segmented exam-resources-tabs" id="examResourcesTabsSegmented">
-        <div class="settings-segmented-slider" id="examResourcesTabsSlider"></div>
-        <button type="button" class="settings-segmented-option exam-resources-tab-btn is-active" data-tab="answerkey">
-          <svg class="exam-resources-tab-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-            <circle cx="7.3" cy="16.7" r="3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M9.4 14.6L17.4 6.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M14.2 9.8l2.1 2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16.2 7.8l2.1 2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="exam-resources-tab-label">Cevap Anahtarı</span>
-          <span class="exam-resources-tab-dot" id="examResourcesAnswerKeyDot"></span>
-        </button>
-        <button type="button" class="settings-segmented-option exam-resources-tab-btn" data-tab="video">
-          <svg class="exam-resources-tab-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-            <rect x="3" y="6" width="14" height="12" rx="2.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M17 10.2l4-2.4v9l-4-2.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="exam-resources-tab-label">Video Çözümü</span>
-          <span class="exam-resources-tab-dot" id="examResourcesVideoDot"></span>
-        </button>
-      </div>
-
-      <div class="exam-resources-panel is-active" id="examResourcesAnswerKeyPanel">
-        <span class="exam-resources-section-hint">Doğru cevapları PDF/görsel olarak yükle ya da bir link ekle</span>
-
-        <div class="exam-resources-field-group">
-          <span class="exam-resources-field-label">Dosya</span>
-          <div class="exam-resources-file-row" id="examResourcesFileRow">
-            <button type="button" class="exam-resources-file-btn" id="examResourcesFilePickBtn">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-                <path d="M8 12.5l5.2-5.2a2.6 2.6 0 0 1 3.7 3.7l-7 7a4.2 4.2 0 0 1-6-6l6.5-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span id="examResourcesFileName">Dosya seç (PDF/görsel)</span>
-            </button>
-            <button type="button" class="delete-btn exam-resources-file-remove is-hidden" id="examResourcesFileRemoveBtn" aria-label="Dosyayı kaldır">×</button>
-          </div>
-          <input type="file" accept="application/pdf,image/*" id="examResourcesFileInput" class="qhavuz-file-input">
-        </div>
-
-        <div class="exam-resources-or-divider"><span>veya</span></div>
-
-        <div class="exam-resources-field-group">
-          <span class="exam-resources-field-label">Link</span>
-          <input type="url" class="page11-field-input" id="examResourcesAnswerLinkInput" placeholder="https://...">
-        </div>
-      </div>
-
-      <div class="exam-resources-panel" id="examResourcesVideoPanel">
-        <span class="exam-resources-section-hint">Bu denemenin video çözümü linkini ekle (YouTube, Drive vb.)</span>
-        <div class="exam-resources-field-group">
-          <span class="exam-resources-field-label">Link<span class="exam-resources-optional-tag">isteğe bağlı</span></span>
-          <input type="url" class="page11-field-input" id="examResourcesVideoLinkInput" placeholder="https://youtube.com/...">
-        </div>
-      </div>
-
-      <div class="settings-confirm-actions page11-modal-actions">
-        <button type="button" class="settings-confirm-cancel" id="examResourcesCancelBtn">Vazgeç</button>
-        <button type="button" class="page11-modal-confirm" id="examResourcesSaveBtn">Kaydet</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Sayfa 11: Tarih seçme takvimi — ekranın tam ortasında açılan kendi
        pop-up'ı. Ayrı bir backdrop üzerinde durur (page11AddBackdrop'ın
        üstünde, z-index ile), böylece hem "Deneme Adı" hem "Tür" alanlarının
@@ -9139,19 +7749,6 @@
   </div>
 </div>
 
-<!-- Sayfa 9: zaten eklenmiş bir dersin işaretini kaldırıp o günün
-     listesinden çıkarmadan önce sorulan onay pop-up'ı. -->
-<div class="settings-confirm-backdrop" id="page9RemoveConfirmBackdrop">
-  <div class="settings-confirm-card">
-    <span class="settings-confirm-title">Emin misin?</span>
-    <span class="settings-confirm-desc" id="page9RemoveConfirmDesc">Bu ders bugünün listesinden çıkarılacak.</span>
-    <div class="settings-confirm-actions">
-      <button type="button" class="settings-confirm-cancel" id="page9RemoveConfirmCancel">Vazgeç</button>
-      <button type="button" class="settings-confirm-confirm" id="page9RemoveConfirmConfirm">Evet, çıkar</button>
-    </div>
-  </div>
-</div>
-
 <!-- Soru Havuzu: bir görsel seçilince açılan pop-up. Branş ve doğru
      cevap şıkkı seçilmeden "Kaydet" butonu pasif kalır. wheel-color /
      page9-add pop-up'larıyla aynı brutalist dili paylaşır. -->
@@ -9160,7 +7757,7 @@
     <div class="page9-add-header">
       <div class="page9-add-heading">
         <span class="page9-add-title">Soru Ekle</span>
-        <span class="page9-add-subtitle">Sınav türünü, dersi ve doğru cevabı işaretle</span>
+        <span class="page9-add-subtitle">Branş ve doğru cevabı işaretle</span>
       </div>
       <button type="button" class="delete-btn page9-add-close" id="qhavuzAddClose" aria-label="Kapat">×</button>
     </div>
@@ -9169,10 +7766,7 @@
       <img id="qhavuzAddPreviewImg" alt="Soru görseli">
     </div>
 
-    <span class="qhavuz-add-label">Sınav Türü</span>
-    <div class="qhavuz-add-subject-grid" id="qhavuzAddTrackGrid"></div>
-
-    <span class="qhavuz-add-label">Ders</span>
+    <span class="qhavuz-add-label">Branş</span>
     <div class="qhavuz-add-subject-grid" id="qhavuzAddSubjectGrid"></div>
 
     <span class="qhavuz-add-label">Doğru Cevap</span>
@@ -9470,29 +8064,6 @@
 </script>
 
 <script>
-  // ---------- PWA Kısayolları (manifest.json "shortcuts"): derin bağlantı ----------
-  // Ana ekrandaki ikona basılı tutunca çıkan kısayollar (ör. "Kronometre")
-  // uygulamayı "./index.html#page-5" gibi bir hash ile açar. Uygulama
-  // tek sayfa (SPA) olduğundan ve sekmeler arada URL değişmeden radio
-  // butonlarla değiştiğinden, hash'i okuyup ilgili nav sekmesini/sayfayı
-  // burada elle etkinleştiriyoruz.
-  const openTabFromHash = () => {
-    const targetId = (location.hash || '').slice(1).trim();
-    if (!targetId || !/^[a-zA-Z0-9_-]+$/.test(targetId)) return;
-    const targetInput = document.querySelector(`.nav-input[value="${targetId}"]`);
-    if (!targetInput) return;
-    targetInput.checked = true;
-    goToPage(targetId);
-    moveSlider(targetInput);
-  };
-
-  // Uygulama bir kısayoldan (hash'li bir URL ile) açıldıysa hemen uygula.
-  openTabFromHash();
-  // Uygulama zaten açıkken bir derin bağlantıya gelinirse de çalışsın.
-  window.addEventListener('hashchange', openTabFromHash);
-</script>
-
-<script>
   // ---------- Sayfa 1: Karşılama metni ----------
   // Saate göre değişen selamlama ("Günaydın"/"İyi günler"/...) ve bugünün
   // tarihi; dakikada bir tazelenir ki gece yarısını/saat dilimini geçen
@@ -9544,63 +8115,7 @@
   // uygulama tamamen kapatılıp yeniden açılsa bile kullanıcı verileri
   // kaybolmaz. Bu script, ona ihtiyaç duyan diğer script'lerden (tema,
   // anahtar vb.) önce çalışması için burada, dosyanın başında tanımlanır.
-  //
-  // NOT: Depolama burada "yerel" (localStorage + IndexedDB) olsa da, veri
-  // biçimi kasıtlı olarak ileride bir cihazlar-arası senkronizasyon
-  // katmanına (ör. bulut yedekleme) kolayca taşınabilecek şekilde
-  // tasarlanmıştır: her kayıtta bir `updatedAt` zaman damgası ve her
-  // cihaz için kalıcı, rastgele bir `deviceId` tutulur. Bugün bu ikisi
-  // yalnızca dışa/içe aktarma (bkz. "Yerel Yedekleme" bölümü) için
-  // kullanılıyor; yarın gerçek bir sunucu senkronizasyonu eklendiğinde
-  // aynı alanlar çakışma çözümü (hangi cihazın verisi daha güncel) için
-  // yeniden kullanılabilir. Bu yüzden veriler artık "yalnızca bu cihazda
-  // kalır" diye sabitlenmiş değil; kullanıcı istediğinde bir yedek dosyası
-  // üzerinden başka bir cihaza taşıyabilir.
   const APP_STORAGE_KEY = 'takvimim_app_state_v1';
-  const APP_SCHEMA_VERSION = 1;
-  const DEVICE_ID_KEY = 'takvimim_device_id_v1';
-
-  // Cihazı ileride (senkronizasyon/çakışma çözümü için) tanımlayacak,
-  // kalıcı ve rastgele bir kimlik. Sunucuya hiçbir şekilde gönderilmez;
-  // şu an yalnızca dışa aktarılan yedeklerin içine damgalanır.
-  const getOrCreateDeviceId = () => {
-    try {
-      let id = localStorage.getItem(DEVICE_ID_KEY);
-      if (!id) {
-        id = (window.crypto && window.crypto.randomUUID)
-          ? window.crypto.randomUUID()
-          : `dev-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-        localStorage.setItem(DEVICE_ID_KEY, id);
-      }
-      return id;
-    } catch (err) {
-      return 'unknown-device';
-    }
-  };
-
-  // ---- Basit, uygulama geneli bildirim (toast) ----
-  // "Kaydedilemedi" gibi sessizce yutulan hatalar artık kullanıcıya
-  // görünür şekilde bildiriliyor; bkz. saveAppState'in catch bloğu.
-  let appToastEl = null;
-  let appToastTimer = null;
-  const showAppToast = (message, variant = 'default') => {
-    try {
-      if (!appToastEl) {
-        appToastEl = document.createElement('div');
-        appToastEl.className = 'app-toast';
-        document.body.appendChild(appToastEl);
-      }
-      appToastEl.textContent = message;
-      appToastEl.classList.toggle('app-toast-error', variant === 'error');
-      appToastEl.classList.remove('is-visible');
-      void appToastEl.offsetWidth;
-      appToastEl.classList.add('is-visible');
-      if (appToastTimer) clearTimeout(appToastTimer);
-      appToastTimer = setTimeout(() => {
-        appToastEl.classList.remove('is-visible');
-      }, variant === 'error' ? 3200 : 1800);
-    } catch (err) { /* toast gösterilemese bile uygulama akışını bozma */ }
-  };
 
   const loadAppState = () => {
     try {
@@ -9616,20 +8131,12 @@
   const APP_STATE = loadAppState();
 
   // Verilen alanları mevcut duruma ekleyip tamamını localStorage'a yazar.
-  // Önceden bir hata olduğunda (ör. depolama kotası dolduğunda) veri
-  // sessizce kaybolabiliyordu; artık kullanıcı görünür bir uyarı alıyor
-  // ve fonksiyon başarı/başarısızlık bilgisini döndürüyor.
   const saveAppState = (patch) => {
     try {
       Object.assign(APP_STATE, patch);
-      APP_STATE.updatedAt = new Date().toISOString();
-      APP_STATE.schemaVersion = APP_SCHEMA_VERSION;
       localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(APP_STATE));
-      return true;
     } catch (err) {
       console.warn('Uygulama verisi kaydedilemedi:', err);
-      showAppToast('Kaydedilemedi: depolama alanı dolu olabilir. Yer açmak için bir yedek alıp bazı görselleri silmeyi deneyin.', 'error');
-      return false;
     }
   };
 </script>
@@ -9816,7 +8323,6 @@
 
   layerA.style.background = themes[themeIndex].gradient;
   document.documentElement.style.setProperty('--theme-text', themes[themeIndex].text);
-  document.documentElement.style.setProperty('--theme-bg', themes[themeIndex].gradient);
 
   const applyNextTheme = () => {
     themeIndex = (themeIndex + 1) % themes.length;
@@ -9827,7 +8333,6 @@
     visibleLayer.classList.remove('is-visible');
 
     document.documentElement.style.setProperty('--theme-text', theme.text);
-    document.documentElement.style.setProperty('--theme-bg', theme.gradient);
 
     const temp = visibleLayer;
     visibleLayer = hiddenLayer;
@@ -9858,7 +8363,6 @@
     visibleLayer.classList.remove('is-visible');
 
     document.documentElement.style.setProperty('--theme-text', theme.text);
-    document.documentElement.style.setProperty('--theme-bg', theme.gradient);
 
     const temp = visibleLayer;
     visibleLayer = hiddenLayer;
@@ -10893,823 +9397,6 @@
   window.addEventListener('pagehide', () => {
     if (swRunning) saveStopwatchState();
   });
-
-  // ---------- Kronometre <-> Sayaç: gizli buton + çevirme (flip) animasyonu ----------
-  // Sayfa 5 üzerinde "Kronometre" başlığının tam üzerine, görsel olarak
-  // tamamen görünmez bir buton oturtulmuştur. Buna dokunulduğunda kart bir
-  // madeni para gibi 90°'ye kadar döner (o an neredeyse görünmez hâle
-  // gelir), tam o noktada içerik "Sayaç" (geri sayım) görünümüyle
-  // değiştirilir ve dönüş tamamlanır. Aynı gizli mekanizma "Sayaç"
-  // başlığında da vardır ve Kronometre'ye geri döner.
-  const stopwatchFlipInner = document.getElementById('stopwatchFlipInner');
-  const stopwatchPageEl = document.getElementById('stopwatchPage');
-  const countdownPageEl = document.getElementById('countdownPage');
-  const stopwatchTitleSecretBtn = document.getElementById('stopwatchTitleSecretBtn');
-  const countdownTitleSecretBtn = document.getElementById('countdownTitleSecretBtn');
-
-  let stopwatchViewMode = 'stopwatch'; // 'stopwatch' | 'countdown'
-  let stopwatchFlipAnimating = false;
-
-  const setStopwatchViewMode = (mode) => {
-    stopwatchViewMode = mode;
-    stopwatchPageEl.style.display = mode === 'stopwatch' ? '' : 'none';
-    countdownPageEl.style.display = mode === 'countdown' ? '' : 'none';
-  };
-
-  const FLIP_HALF_MS = 300;
-  const flipStopwatchViewMode = (mode) => {
-    if (stopwatchFlipAnimating || stopwatchViewMode === mode) return;
-    // Çalışan bir kronometre/sayaç varken mod değiştirmeyi engelle; ikisi
-    // aynı anda tam ekranda görünürse görsel karmaşaya yol açar.
-    if (swRunning || cdRunning) return;
-    stopwatchFlipAnimating = true;
-
-    stopwatchFlipInner.style.transition = `transform ${FLIP_HALF_MS}ms cubic-bezier(0.45, 0, 0.55, 1)`;
-    stopwatchFlipInner.style.transform = 'rotateY(90deg)';
-
-    setTimeout(() => {
-      setStopwatchViewMode(mode);
-      // Yeni içerik, dönüşün "diğer tarafından" geliyormuş gibi görünsün
-      // diye -90°'den başlatılır; geçiş kapatılıp anında sıçrama yapılır,
-      // ardından tekrar açılıp 0°'ye tamamlanır.
-      stopwatchFlipInner.style.transition = 'none';
-      stopwatchFlipInner.style.transform = 'rotateY(-90deg)';
-      void stopwatchFlipInner.offsetWidth; // reflow'u zorla
-      stopwatchFlipInner.style.transition = `transform ${FLIP_HALF_MS}ms cubic-bezier(0.45, 0, 0.55, 1)`;
-      stopwatchFlipInner.style.transform = 'rotateY(0deg)';
-      setTimeout(() => { stopwatchFlipAnimating = false; }, FLIP_HALF_MS + 20);
-    }, FLIP_HALF_MS);
-  };
-
-  if (stopwatchTitleSecretBtn) {
-    stopwatchTitleSecretBtn.addEventListener('click', () => flipStopwatchViewMode('countdown'));
-  }
-  if (countdownTitleSecretBtn) {
-    countdownTitleSecretBtn.addEventListener('click', () => flipStopwatchViewMode('stopwatch'));
-  }
-
-  // ---------- Sayaç (Geri Sayım) ----------
-  const countdownSetup = document.getElementById('countdownSetup');
-  const countdownDisplay = document.getElementById('countdownDisplay');
-  const countdownControls = document.getElementById('countdownControls');
-  const countdownTimeEl = document.getElementById('countdownTime');
-  const countdownHint = document.getElementById('countdownHint');
-  const countdownStartBtn = document.getElementById('countdownStartBtn');
-  const countdownResetBtn = document.getElementById('countdownResetBtn');
-  const countdownMinValueEl = document.getElementById('countdownMinValue');
-  const countdownSecValueEl = document.getElementById('countdownSecValue');
-  const countdownMinUpBtn = document.getElementById('countdownMinUpBtn');
-  const countdownMinDownBtn = document.getElementById('countdownMinDownBtn');
-  const countdownSecUpBtn = document.getElementById('countdownSecUpBtn');
-  const countdownSecDownBtn = document.getElementById('countdownSecDownBtn');
-  const countdownFullscreen = document.getElementById('countdownFullscreen');
-  const countdownTimeFullEl = document.getElementById('countdownTimeFull');
-  const countdownExitZone = document.getElementById('countdownExitZone');
-  const countdownFullscreenHint = document.getElementById('countdownFullscreenHint');
-
-  let cdMinutes = 5;
-  let cdSeconds = 0;
-  let cdTotalMs = cdMinutes * 60 * 1000;
-  let cdRemainingMs = cdTotalMs;
-  let cdStartedAt = 0;
-  let cdRunning = false;
-  let cdFinished = false;
-  let cdRafId = null;
-  let countdownHintTimer = null;
-
-  // ---- Sayaç bitiş sesi: "Bildirim" panelinde seçilebilen hazır sesler.
-  // Dosyalar index.html ile aynı klasördeki "sounds" alt klasöründen
-  // okunur (icons/ klasörüyle aynı mantık). ----
-  const COUNTDOWN_SOUND_OPTIONS = [
-    { id: 'klasik-zil', name: 'Klasik Zil', file: 'sounds/klasik-zil.mp3' },
-    { id: 'alarm-saati', name: 'Alarm Saati', file: 'sounds/alarm-saati.mp3' },
-    { id: 'modern-zil', name: 'Modern Zil', file: 'sounds/modern-zil.mp3' },
-    { id: 'yumusak-zil', name: 'Yumuşak Zil', file: 'sounds/yumusak-zil.mp3' },
-  ];
-  const DEFAULT_COUNTDOWN_SOUND_ID = COUNTDOWN_SOUND_OPTIONS[0].id;
-  let countdownSelectedSoundId = COUNTDOWN_SOUND_OPTIONS.some((s) => s.id === APP_STATE.countdownSoundId)
-    ? APP_STATE.countdownSoundId
-    : DEFAULT_COUNTDOWN_SOUND_ID;
-
-  // Sayaç dolduğunda seçili sesi çalmaya başlar ve kullanıcı tam ekrandan
-  // çıkana (dismissFinishedCountdown) kadar KESİNTİSİZ biçimde loop halinde
-  // çalmaya devam eder; dosya bulunamazsa veya tarayıcı otomatik oynatmayı
-  // engellerse sessizce geçilir (titreşim zaten var).
-  let countdownFinishAudio = null;
-
-  const playCountdownFinishSound = () => {
-    const sound = COUNTDOWN_SOUND_OPTIONS.find((s) => s.id === countdownSelectedSoundId) || COUNTDOWN_SOUND_OPTIONS[0];
-    if (!sound) return;
-    try {
-      // Önceden çalan bir bitiş sesi varsa (örn. hızlı ardışık bitiş/çıkış
-      // senaryolarında) önce onu tamamen durdurup temizle.
-      if (countdownFinishAudio) {
-        try { countdownFinishAudio.pause(); } catch (err) { /* yok say */ }
-        countdownFinishAudio.src = '';
-        countdownFinishAudio = null;
-      }
-      const audio = new Audio(sound.file);
-      audio.loop = true;
-      countdownFinishAudio = audio;
-      audio.play().catch(() => {});
-    } catch (err) { /* yok say */ }
-  };
-
-  // Tam ekrandan çıkılınca (dismissFinishedCountdown) çağrılır: loop
-  // halinde çalan bitiş sesini anında durdurur.
-  const stopCountdownFinishSound = () => {
-    if (!countdownFinishAudio) return;
-    try {
-      countdownFinishAudio.pause();
-      countdownFinishAudio.loop = false;
-      countdownFinishAudio.currentTime = 0;
-    } catch (err) { /* yok say */ }
-    countdownFinishAudio = null;
-  };
-
-  const formatCountdown = (ms) => {
-    const totalSeconds = Math.max(0, Math.ceil(ms / 1000));
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${pad2(minutes)}:${pad2(seconds)}`;
-  };
-
-  const currentCountdownMs = () => {
-    if (!cdRunning) return cdRemainingMs;
-    return Math.max(0, cdRemainingMs - (performance.now() - cdStartedAt));
-  };
-
-  const renderCountdownTime = (msOverride) => {
-    const text = formatCountdown(typeof msOverride === 'number' ? msOverride : currentCountdownMs());
-    countdownTimeEl.textContent = text;
-    countdownTimeFullEl.textContent = text;
-  };
-
-  const showCountdownSetup = () => {
-    countdownSetup.style.display = '';
-    countdownDisplay.style.display = 'none';
-    countdownControls.style.display = 'none';
-  };
-
-  const showCountdownRunningUI = () => {
-    countdownSetup.style.display = 'none';
-    countdownDisplay.style.display = '';
-    countdownControls.style.display = '';
-  };
-
-  // Süre dolduğunda tam ekrandan HEMEN çıkılmaz: kullanıcı "Süre doldu"
-  // uyarısını görüp kendi isteğiyle (dokunarak) kapatana kadar tam ekran
-  // açık kalır (bkz. dismissFinishedCountdown).
-  const finishCountdown = () => {
-    cdRunning = false;
-    cdFinished = true;
-    if (cdRafId) cancelAnimationFrame(cdRafId);
-    cdRemainingMs = 0;
-    renderCountdownTime(0);
-    clearTimeout(countdownHintTimer);
-    // is-countdown-running KALDIRILMAZ; tam ekran görünümü açık kalır,
-    // sadece "bitti" görünümü (kırmızı yanıp sönme) üzerine eklenir.
-    document.body.classList.add('is-countdown-finished');
-    countdownFullscreenHint.textContent = 'Süre doldu! Kapatmak için dokun';
-    countdownFullscreenHint.classList.remove('is-hidden');
-    countdownHint.textContent = 'Süre doldu';
-    if (navigator.vibrate) {
-      try { navigator.vibrate([200, 100, 200, 100, 200]); } catch (err) { /* yok say */ }
-    }
-    playCountdownFinishSound();
-  };
-
-  // Süre dolduktan sonra tam ekrana dokununca çağrılır: uyarıyı kapatıp
-  // sayacı yeni bir süre seçilebilecek kurulum ekranına döndürür.
-  const dismissFinishedCountdown = () => {
-    cdFinished = false;
-    stopCountdownFinishSound();
-    document.body.classList.remove('is-countdown-running');
-    document.body.classList.remove('is-countdown-finished');
-    showCountdownSetup();
-  };
-
-  const countdownTick = () => {
-    const remaining = currentCountdownMs();
-    renderCountdownTime(remaining);
-    if (remaining <= 0) {
-      finishCountdown();
-      return;
-    }
-    if (cdRunning) cdRafId = requestAnimationFrame(countdownTick);
-  };
-
-  const startCountdown = () => {
-    if (cdRunning || cdRemainingMs <= 0) return;
-    cdRunning = true;
-    cdFinished = false;
-    cdStartedAt = performance.now();
-    document.body.classList.remove('is-countdown-finished');
-    document.body.classList.add('is-countdown-running');
-    countdownDisplay.setAttribute('aria-label', 'Sayacı duraklat');
-    countdownHint.textContent = 'Duraklatmak için dokun';
-    countdownFullscreenHint.textContent = 'Duraklatmak için dokun';
-    if (cdRafId) cancelAnimationFrame(cdRafId);
-    cdRafId = requestAnimationFrame(countdownTick);
-    countdownFullscreenHint.classList.remove('is-hidden');
-    clearTimeout(countdownHintTimer);
-    countdownHintTimer = setTimeout(() => {
-      countdownFullscreenHint.classList.add('is-hidden');
-    }, 3000);
-  };
-
-  const pauseCountdown = () => {
-    if (!cdRunning) return;
-    cdRemainingMs = currentCountdownMs();
-    cdRunning = false;
-    if (cdRafId) cancelAnimationFrame(cdRafId);
-    document.body.classList.remove('is-countdown-running');
-    countdownDisplay.setAttribute('aria-label', 'Sayacı devam ettir');
-    countdownHint.textContent = 'Devam etmek için dokun';
-    renderCountdownTime();
-  };
-
-  const toggleCountdown = () => {
-    if (cdFinished) {
-      dismissFinishedCountdown();
-      return;
-    }
-    if (cdRunning) pauseCountdown();
-    else startCountdown();
-  };
-
-  const resetCountdown = () => {
-    if (cdRunning) return;
-    stopCountdownFinishSound();
-    cdTotalMs = (cdMinutes * 60 + cdSeconds) * 1000;
-    cdRemainingMs = cdTotalMs;
-    renderCountdownTime();
-    showCountdownSetup();
-  };
-
-  // Dakika/saniye ayar butonlarına basılı tutulunca hızlıca art arda
-  // artırıp azaltmayı sağlayan yardımcı: kısa dokunuşta tek seferlik,
-  // basılı tutulunca (380ms sonra) periyodik olarak tetiklenir.
-  const bindCountdownHoldRepeat = (el, action) => {
-    if (!el) return;
-    let holdTimeout = null;
-    let holdInterval = null;
-    let didRepeat = false;
-
-    const clearTimers = () => {
-      clearTimeout(holdTimeout);
-      clearInterval(holdInterval);
-      holdTimeout = null;
-      holdInterval = null;
-    };
-
-    el.addEventListener('pointerdown', (e) => {
-      e.preventDefault();
-      // preventDefault() burada fareyle basılı tutmada tarayıcının
-      // native :active durumunu tetiklemesini engelleyebiliyor (dokunma
-      // girişinde bu sorun yaşanmıyor); bu yüzden basma animasyonunu
-      // .is-pressed sınıfıyla elle de garanti altına alıyoruz.
-      el.classList.add('is-pressed');
-      didRepeat = false;
-      clearTimers();
-      holdTimeout = setTimeout(() => {
-        didRepeat = true;
-        action();
-        holdInterval = setInterval(action, 90);
-      }, 380);
-    });
-
-    const stop = () => {
-      clearTimers();
-      el.classList.remove('is-pressed');
-    };
-    el.addEventListener('pointerup', stop);
-    el.addEventListener('pointercancel', stop);
-    el.addEventListener('pointerleave', stop);
-
-    // Kısa bir dokunuş (basılı tutma eşiğine ulaşmadan bırakılan) tek
-    // seferlik artış/azalışı normal "click" üzerinden yapar; bu sayede
-    // klavye ile (Enter/Space) etkileşim de çalışmaya devam eder.
-    el.addEventListener('click', () => {
-      if (didRepeat) {
-        didRepeat = false;
-        return;
-      }
-      action();
-    });
-  };
-
-  const countdownAdjustMinutes = (dir) => {
-    cdMinutes = dir > 0 ? Math.min(999, cdMinutes + 1) : Math.max(0, cdMinutes - 1);
-    countdownMinValueEl.textContent = pad2(cdMinutes);
-  };
-
-  const countdownAdjustSeconds = (dir) => {
-    cdSeconds = dir > 0
-      ? (cdSeconds + 5 > 55 ? 0 : cdSeconds + 5)
-      : (cdSeconds - 5 < 0 ? 55 : cdSeconds - 5);
-    countdownSecValueEl.textContent = pad2(cdSeconds);
-  };
-
-  bindCountdownHoldRepeat(countdownMinUpBtn, () => countdownAdjustMinutes(1));
-  bindCountdownHoldRepeat(countdownMinDownBtn, () => countdownAdjustMinutes(-1));
-  bindCountdownHoldRepeat(countdownSecUpBtn, () => countdownAdjustSeconds(1));
-  bindCountdownHoldRepeat(countdownSecDownBtn, () => countdownAdjustSeconds(-1));
-
-  if (countdownStartBtn) countdownStartBtn.addEventListener('click', () => {
-    cdTotalMs = (cdMinutes * 60 + cdSeconds) * 1000;
-    if (cdTotalMs <= 0) return;
-    cdRemainingMs = cdTotalMs;
-    renderCountdownTime();
-    showCountdownRunningUI();
-    startCountdown();
-  });
-
-  if (countdownResetBtn) countdownResetBtn.addEventListener('click', resetCountdown);
-
-  if (countdownDisplay) {
-    countdownDisplay.addEventListener('click', toggleCountdown);
-    countdownDisplay.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleCountdown();
-      }
-    });
-  }
-
-  if (countdownExitZone) {
-    countdownExitZone.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleCountdown();
-    });
-    countdownExitZone.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleCountdown();
-      }
-    });
-  }
-
-  // Başlangıçta gösterge metinlerini seçili varsayılan süreyle eşitle.
-  renderCountdownTime(cdRemainingMs);
-
-  // ---------- Sayaç: Ayar butonuyla açılan "Hazır Süreler" pop-up'ı ----------
-  // Kullanıcının önceden tanımlayabileceği (veya varsayılan olarak
-  // gelen) süre kısayolları; APP_STATE.countdownPresets altında kalıcı
-  // olarak saklanır. Bir çipe dokununca dk/sn değerleri doğrudan
-  // kurulum kartına uygulanır (Başlat'a basmadan); çipin sağ üstündeki
-  // çarpı ile kalıcı olarak silinebilir, alttaki dk/sn girişleriyle de
-  // yeni bir hazır süre eklenebilir.
-  const countdownSoundBtn = document.getElementById('countdownSoundBtn');
-  const countdownPresetsBackdrop = document.getElementById('countdownPresetsBackdrop');
-  const countdownPresetsGrid = document.getElementById('countdownPresetsGrid');
-  const countdownPresetsClose = document.getElementById('countdownPresetsClose');
-  const countdownPresetsEditBtn = document.getElementById('countdownPresetsEditBtn');
-  const countdownPresetsNotifBtn = document.getElementById('countdownPresetsNotifBtn');
-  const countdownPresetsBody = document.getElementById('countdownPresetsBody');
-  const countdownPresetsSoon = document.getElementById('countdownPresetsSoon');
-  const countdownPresetsContent = document.getElementById('countdownPresetsContent');
-  const countdownSoundsList = document.getElementById('countdownSoundsList');
-  // Panel her yeniden çizildiğinde (renderCountdownSoundsList) satırlar
-  // baştan oluşturulduğu için, o anki satırları her seferinde canlı
-  // olarak topluyoruz (referansları önceden sabitlemiyoruz).
-  const collectCountdownSoundRows = () => (
-    countdownSoundsList ? Array.from(countdownSoundsList.querySelectorAll('.countdown-sound-row')) : []
-  );
-  const countdownPresetsTitleEl = document.querySelector('#countdownPresetsBackdrop .page9-add-title');
-  const countdownPresetsSubtitleEl = document.querySelector('#countdownPresetsBackdrop .page9-add-subtitle');
-  const countdownPresetAddMin = document.getElementById('countdownPresetAddMin');
-  const countdownPresetAddSec = document.getElementById('countdownPresetAddSec');
-  const countdownPresetAddBtn = document.getElementById('countdownPresetAddBtn');
-  const countdownPresetsAddRow = document.getElementById('countdownPresetsAddRow');
-
-  // "Düzenle" moduna girilip girilmediğini tutar: kapalıyken çipe dokunmak
-  // o süreyi doğrudan sayaca uygular; açıkken çiplerin sağ üstünde beliren
-  // çarpı ile silme yapılır, çipe dokunmak süreyi uygulamaz.
-  let countdownPresetsEditing = false;
-
-  const DEFAULT_COUNTDOWN_PRESETS = [5, 10, 15, 20, 25, 30, 45, 60].map((m, idx) => ({
-    id: `cdp-default-${idx}`,
-    minutes: m,
-    seconds: 0,
-  }));
-
-  const loadCountdownPresets = () => {
-    const saved = APP_STATE.countdownPresets;
-    if (Array.isArray(saved) && saved.length) {
-      return saved
-        .filter((p) => p && typeof p === 'object')
-        .map((p) => ({
-          id: typeof p.id === 'string' ? p.id : `cdp-${Date.now()}-${Math.random().toString(36).slice(2)}`,
-          minutes: Math.max(0, Math.min(999, parseInt(p.minutes, 10) || 0)),
-          seconds: Math.max(0, Math.min(59, parseInt(p.seconds, 10) || 0)),
-        }));
-    }
-    // İlk açılışta boş bir liste yerine kullanışlı birkaç varsayılan
-    // süreyle başlansın; kullanıcı istediğini silip kendi listesini
-    // oluşturabilir.
-    return DEFAULT_COUNTDOWN_PRESETS.map((p) => ({ ...p }));
-  };
-
-  let countdownPresets = loadCountdownPresets();
-
-  const saveCountdownPresets = () => {
-    saveAppState({ countdownPresets });
-  };
-
-  // İlk açılışta APP_STATE'te hiç kayıt yoksa, varsayılan liste hemen
-  // kalıcı hale getirilir; böylece bir yedek alınırsa bu varsayılanlar
-  // da dışa aktarılır.
-  if (!Array.isArray(APP_STATE.countdownPresets)) {
-    saveCountdownPresets();
-  }
-
-  const formatPresetLabel = (minutes, seconds) => (seconds > 0 ? `${minutes}:${pad2(seconds)}` : `${minutes} dk`);
-
-  // Pop-up'ın boyutu, body (ızgara + ekleme satırı) ile bildirim paneli
-  // ("Yakında") arasında geçiş yaparken sabit kalsın diye, o an gösterilen
-  // ve gösterilmeyen içeriğin doğal yüksekliklerinden en büyüğünü ölçüp
-  // ortak sarmalayıcıya (.countdown-presets-content) min-height olarak
-  // yazar. Gizli olan taraf, akışı bozmadan (position:absolute +
-  // visibility:hidden) geçici olarak ölçülür.
-  const syncCountdownPresetsContentHeight = () => {
-    if (!countdownPresetsContent || !countdownPresetsBody || !countdownPresetsSoon) return;
-
-    const measureHeight = (el) => {
-      const wasHidden = el.style.display === 'none' || getComputedStyle(el).display === 'none';
-      if (!wasHidden) return el.offsetHeight;
-      const prevDisplay = el.style.display;
-      const prevPosition = el.style.position;
-      const prevVisibility = el.style.visibility;
-      el.style.position = 'absolute';
-      el.style.visibility = 'hidden';
-      el.style.display = el === countdownPresetsSoon ? 'flex' : '';
-      const height = el.offsetHeight;
-      el.style.display = prevDisplay;
-      el.style.position = prevPosition;
-      el.style.visibility = prevVisibility;
-      return height;
-    };
-
-    countdownPresetsContent.style.minHeight = '0px';
-    const bodyHeight = measureHeight(countdownPresetsBody);
-    const soonHeight = measureHeight(countdownPresetsSoon);
-    countdownPresetsContent.style.minHeight = `${Math.max(bodyHeight, soonHeight)}px`;
-  };
-
-  const applyCountdownPreset = (preset) => {
-    cdMinutes = Math.max(0, Math.min(999, preset.minutes));
-    cdSeconds = Math.max(0, Math.min(59, preset.seconds));
-    countdownMinValueEl.textContent = pad2(cdMinutes);
-    countdownSecValueEl.textContent = pad2(cdSeconds);
-    cdTotalMs = (cdMinutes * 60 + cdSeconds) * 1000;
-    cdRemainingMs = cdTotalMs;
-    renderCountdownTime(cdRemainingMs);
-  };
-
-  const renderCountdownPresets = ({ skipHeightSync = false } = {}) => {
-    if (!countdownPresetsGrid) return;
-    countdownPresetsGrid.innerHTML = '';
-    if (!countdownPresets.length) {
-      const empty = document.createElement('div');
-      empty.className = 'countdown-presets-empty';
-      empty.textContent = 'Henüz hazır süre yok. Aşağıdan ekleyebilirsin.';
-      countdownPresetsGrid.appendChild(empty);
-      if (!skipHeightSync) syncCountdownPresetsContentHeight();
-      return;
-    }
-    countdownPresets.forEach((preset) => {
-      const chip = document.createElement('div');
-      chip.className = 'countdown-preset-chip';
-      chip.dataset.presetId = preset.id;
-
-      const time = document.createElement('span');
-      time.className = 'countdown-preset-chip-time';
-      time.textContent = formatPresetLabel(preset.minutes, preset.seconds);
-      chip.appendChild(time);
-
-      const del = document.createElement('button');
-      del.type = 'button';
-      del.className = 'delete-btn countdown-preset-chip-delete';
-      del.textContent = '×';
-      del.setAttribute('aria-label', `"${formatPresetLabel(preset.minutes, preset.seconds)}" hazır süresini sil`);
-      del.addEventListener('click', (e) => {
-        e.stopPropagation();
-        animateRemoveCountdownPreset(preset.id);
-      });
-      chip.appendChild(del);
-
-      chip.addEventListener('click', () => {
-        // Düzenleme modundayken çipe dokunmak yalnızca silme çarpısını
-        // hedeflemek içindir; süreyi sayaca uygulamaz.
-        if (countdownPresetsEditing) return;
-        applyCountdownPreset(preset);
-        closeCountdownPresets();
-      });
-
-      countdownPresetsGrid.appendChild(chip);
-    });
-    if (!skipHeightSync) syncCountdownPresetsContentHeight();
-  };
-
-  // Bir hazır süre silinince o çip anında (animasyonsuz) kaldırılır;
-  // diğer çiplere hiç dokunulmaz. Liste tamamen boşaldığında "henüz
-  // hazır süre yok" mesajı için tek seferlik yeniden çizim yapılır.
-  const animateRemoveCountdownPreset = (id) => {
-    const chipEl = countdownPresetsGrid
-      ? countdownPresetsGrid.querySelector(`.countdown-preset-chip[data-preset-id="${id}"]`)
-      : null;
-
-    countdownPresets = countdownPresets.filter((p) => p.id !== id);
-    saveCountdownPresets();
-
-    if (!countdownPresets.length) {
-      renderCountdownPresets();
-      return;
-    }
-
-    if (chipEl) {
-      chipEl.remove();
-      syncCountdownPresetsContentHeight();
-    } else {
-      renderCountdownPresets();
-    }
-  };
-
-  // ---- Bildirim paneli: ses seçimi + dinleme (önizleme) ----
-  let countdownPreviewAudio = null;
-  let countdownPreviewPlayingId = null;
-
-  const getCountdownPreviewAudio = () => {
-    if (!countdownPreviewAudio) {
-      countdownPreviewAudio = new Audio();
-      countdownPreviewAudio.addEventListener('ended', () => {
-        countdownPreviewPlayingId = null;
-        renderCountdownSoundsList();
-      });
-    }
-    return countdownPreviewAudio;
-  };
-
-  const stopCountdownPreview = () => {
-    if (countdownPreviewAudio) {
-      try { countdownPreviewAudio.pause(); countdownPreviewAudio.currentTime = 0; } catch (err) { /* yok say */ }
-    }
-    if (countdownPreviewPlayingId !== null) {
-      countdownPreviewPlayingId = null;
-      renderCountdownSoundsList();
-    }
-  };
-
-  const toggleCountdownSoundPreview = (sound) => {
-    if (countdownPreviewPlayingId === sound.id) {
-      stopCountdownPreview();
-      return;
-    }
-    const audio = getCountdownPreviewAudio();
-    try {
-      audio.pause();
-      audio.src = sound.file;
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
-      countdownPreviewPlayingId = sound.id;
-    } catch (err) { /* yok say */ }
-    renderCountdownSoundsList();
-  };
-
-  const selectCountdownSound = (id) => {
-    if (countdownSelectedSoundId === id) return;
-    countdownSelectedSoundId = id;
-    saveAppState({ countdownSoundId: id });
-    renderCountdownSoundsList();
-  };
-
-  const renderCountdownSoundsList = () => {
-    if (!countdownSoundsList) return;
-    countdownSoundsList.innerHTML = '';
-    COUNTDOWN_SOUND_OPTIONS.forEach((sound) => {
-      const row = document.createElement('div');
-      row.className = 'countdown-sound-row';
-      row.classList.toggle('is-selected', sound.id === countdownSelectedSoundId);
-      row.setAttribute('role', 'button');
-      row.setAttribute('tabindex', '0');
-
-      const isPlaying = countdownPreviewPlayingId === sound.id;
-      const playBtn = document.createElement('button');
-      playBtn.type = 'button';
-      playBtn.className = 'countdown-sound-play-btn';
-      playBtn.setAttribute('aria-label', isPlaying ? `"${sound.name}" sesini durdur` : `"${sound.name}" sesini dinle`);
-      playBtn.innerHTML = isPlaying
-        ? '<svg viewBox="0 0 24 24" width="11" height="11"><rect x="5" y="4" width="5" height="16" fill="currentColor"/><rect x="14" y="4" width="5" height="16" fill="currentColor"/></svg>'
-        : '<svg viewBox="0 0 24 24" width="11" height="11"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg>';
-      playBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleCountdownSoundPreview(sound);
-      });
-      row.appendChild(playBtn);
-
-      const name = document.createElement('span');
-      name.className = 'countdown-sound-name';
-      name.textContent = sound.name;
-      row.appendChild(name);
-
-      const check = document.createElement('span');
-      check.className = 'countdown-sound-check';
-      check.innerHTML = '<svg viewBox="0 0 24 24" width="10" height="10"><path d="M4 12l6 6L20 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      row.appendChild(check);
-
-      row.addEventListener('click', () => selectCountdownSound(sound.id));
-      row.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          selectCountdownSound(sound.id);
-        }
-      });
-
-      countdownSoundsList.appendChild(row);
-    });
-  };
-
-  const setCountdownPresetsEditing = (editing) => {
-    countdownPresetsEditing = editing;
-    if (countdownPresetsGrid) countdownPresetsGrid.classList.toggle('is-editing', editing);
-    if (countdownPresetsEditBtn) {
-      countdownPresetsEditBtn.classList.toggle('is-active', editing);
-      countdownPresetsEditBtn.textContent = editing ? 'Bitti' : 'Düzenle';
-    }
-  };
-
-  const CD_TEXT_STAGGER_MS = 55;
-  const CD_TEXT_FADE_MS = 220;
-  let countdownPresetsNotifShown = false;
-  let countdownPresetsNotifAnimating = false;
-
-  // Başlık/alt başlık iki panel arasında ortak kullanılır; panel değişince
-  // metin içerikleri bunlarla değiştirilir (bkz. showCountdownPresetsNotif /
-  // hideCountdownPresetsNotif), elemanların kendisi gizlenmez.
-  const COUNTDOWN_PRESETS_TITLE = 'Hazır Süreler';
-  const COUNTDOWN_PRESETS_SUBTITLE = 'Dokununca sayaca uygulanır';
-  const COUNTDOWN_SOUND_PANEL_TITLE = 'Bildirim Sesi';
-  const COUNTDOWN_SOUND_PANEL_SUBTITLE = 'Sayaç bitince çalacak sesi seç';
-
-  // Pop-up içindeki, o an ekranda görünen "gövde" elemanlarını sırasıyla
-  // döndürür: boş-liste mesajı dahil, butonlar/etkileşimli elemanlar da
-  // (Düzenle butonu, her hazır süre çipi, ekleme satırının tamamı) dahildir.
-  // Başlık/alt başlık burada YOK; onlar gizlenmiyor, metinleri değişiyor
-  // (bkz. showCountdownPresetsNotif / hideCountdownPresetsNotif).
-  const collectCountdownPresetsFadeEls = () => {
-    const els = [countdownPresetsEditBtn];
-    if (countdownPresetsGrid) {
-      const chips = countdownPresetsGrid.querySelectorAll('.countdown-preset-chip');
-      if (chips.length) {
-        chips.forEach((el) => els.push(el));
-      } else {
-        countdownPresetsGrid.querySelectorAll('.countdown-presets-empty').forEach((el) => els.push(el));
-      }
-    }
-    if (countdownPresetsAddRow) els.push(countdownPresetsAddRow);
-    return els.filter(Boolean);
-  };
-
-  // Verilen elemanları birer birer (aralarında CD_TEXT_STAGGER_MS ile)
-  // .cd-text-hidden sınıfını ekleyip/kaldırarak sırayla kaybettirir ya
-  // da belirtir; son elemanın geçişi bitince onDone çağrılır.
-  const cdRunTextStagger = (els, { hide }, onDone) => {
-    if (!els.length) {
-      if (onDone) onDone();
-      return;
-    }
-    els.forEach((el, idx) => {
-      setTimeout(() => {
-        el.classList.toggle('cd-text-hidden', hide);
-      }, idx * CD_TEXT_STAGGER_MS);
-    });
-    if (onDone) {
-      setTimeout(onDone, (els.length - 1) * CD_TEXT_STAGGER_MS + CD_TEXT_FADE_MS);
-    }
-  };
-
-  const showCountdownPresetsNotif = () => {
-    if (countdownPresetsNotifAnimating || countdownPresetsNotifShown) return;
-    countdownPresetsNotifAnimating = true;
-    if (countdownPresetsNotifBtn) countdownPresetsNotifBtn.classList.add('is-active');
-    // Düzenleme modu açıksa (çipler titreşiyor, silme çarpıları görünür)
-    // önce onu kapatıyoruz; aksi halde çiplerin kendi wiggle animasyonu
-    // solma geçişiyle çakışıp "sert" görünmesine yol açardı.
-    if (countdownPresetsEditing) setCountdownPresetsEditing(false);
-    const headingEls = [countdownPresetsTitleEl, countdownPresetsSubtitleEl].filter(Boolean);
-    cdRunTextStagger([...headingEls, ...collectCountdownPresetsFadeEls()], { hide: true }, () => {
-      if (countdownPresetsBody) countdownPresetsBody.style.display = 'none';
-      if (countdownPresetsTitleEl) countdownPresetsTitleEl.textContent = COUNTDOWN_SOUND_PANEL_TITLE;
-      if (countdownPresetsSubtitleEl) countdownPresetsSubtitleEl.textContent = COUNTDOWN_SOUND_PANEL_SUBTITLE;
-      renderCountdownSoundsList();
-      if (countdownPresetsSoon) countdownPresetsSoon.style.display = 'flex';
-      const revealEls = [...headingEls, ...collectCountdownSoundRows()];
-      if (revealEls.length) {
-        revealEls.forEach((el) => el.classList.add('cd-text-hidden'));
-        void countdownPresetsBackdrop.offsetWidth;
-        cdRunTextStagger(revealEls, { hide: false }, () => {
-          countdownPresetsNotifAnimating = false;
-        });
-      } else {
-        countdownPresetsNotifAnimating = false;
-      }
-      countdownPresetsNotifShown = true;
-    });
-  };
-
-  const hideCountdownPresetsNotif = () => {
-    if (countdownPresetsNotifAnimating || !countdownPresetsNotifShown) return;
-    countdownPresetsNotifAnimating = true;
-    if (countdownPresetsNotifBtn) countdownPresetsNotifBtn.classList.remove('is-active');
-    stopCountdownPreview();
-    const headingEls = [countdownPresetsTitleEl, countdownPresetsSubtitleEl].filter(Boolean);
-    const soonEls = [...headingEls, ...collectCountdownSoundRows()];
-    cdRunTextStagger(soonEls, { hide: true }, () => {
-      if (countdownPresetsSoon) countdownPresetsSoon.style.display = 'none';
-      if (countdownPresetsBody) countdownPresetsBody.style.display = '';
-      if (countdownPresetsTitleEl) countdownPresetsTitleEl.textContent = COUNTDOWN_PRESETS_TITLE;
-      if (countdownPresetsSubtitleEl) countdownPresetsSubtitleEl.textContent = COUNTDOWN_PRESETS_SUBTITLE;
-      const els = [...headingEls, ...collectCountdownPresetsFadeEls()];
-      els.forEach((el) => el.classList.add('cd-text-hidden'));
-      void countdownPresetsBackdrop.offsetWidth;
-      countdownPresetsNotifShown = false;
-      cdRunTextStagger(els, { hide: false }, () => {
-        countdownPresetsNotifAnimating = false;
-      });
-    });
-  };
-
-  // Pop-up her açıldığında bildirim paneli kapalı, normal içerik
-  // (ızgara + ekleme satırı) görünür durumda başlasın.
-  const resetCountdownPresetsNotif = () => {
-    countdownPresetsNotifAnimating = false;
-    countdownPresetsNotifShown = false;
-    stopCountdownPreview();
-    if (countdownPresetsNotifBtn) countdownPresetsNotifBtn.classList.remove('is-active');
-    if (countdownPresetsSoon) countdownPresetsSoon.style.display = 'none';
-    if (countdownPresetsBody) countdownPresetsBody.style.display = '';
-    if (countdownPresetsTitleEl) countdownPresetsTitleEl.textContent = COUNTDOWN_PRESETS_TITLE;
-    if (countdownPresetsSubtitleEl) countdownPresetsSubtitleEl.textContent = COUNTDOWN_PRESETS_SUBTITLE;
-    [countdownPresetsTitleEl, countdownPresetsSubtitleEl].filter(Boolean).forEach((el) => el.classList.remove('cd-text-hidden'));
-    collectCountdownPresetsFadeEls().forEach((el) => el.classList.remove('cd-text-hidden'));
-    renderCountdownSoundsList();
-    collectCountdownSoundRows().forEach((el) => el.classList.remove('cd-text-hidden'));
-  };
-
-  const openCountdownPresets = () => {
-    setCountdownPresetsEditing(false);
-    renderCountdownPresets();
-    renderCountdownSoundsList();
-    resetCountdownPresetsNotif();
-    syncCountdownPresetsContentHeight();
-    if (countdownPresetsBackdrop) countdownPresetsBackdrop.classList.add('is-open');
-  };
-
-  const closeCountdownPresets = () => {
-    stopCountdownPreview();
-    if (countdownPresetsBackdrop) countdownPresetsBackdrop.classList.remove('is-open');
-  };
-
-  if (countdownSoundBtn) countdownSoundBtn.addEventListener('click', openCountdownPresets);
-  if (countdownPresetsClose) countdownPresetsClose.addEventListener('click', closeCountdownPresets);
-  if (countdownPresetsEditBtn) {
-    countdownPresetsEditBtn.addEventListener('click', () => setCountdownPresetsEditing(!countdownPresetsEditing));
-  }
-  if (countdownPresetsNotifBtn) {
-    countdownPresetsNotifBtn.addEventListener('click', () => {
-      if (countdownPresetsNotifShown) hideCountdownPresetsNotif();
-      else showCountdownPresetsNotif();
-    });
-  }
-  if (countdownPresetsBackdrop) {
-    countdownPresetsBackdrop.addEventListener('click', (e) => {
-      if (e.target === countdownPresetsBackdrop) closeCountdownPresets();
-    });
-  }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && countdownPresetsBackdrop && countdownPresetsBackdrop.classList.contains('is-open')) {
-      closeCountdownPresets();
-    }
-  });
-
-  if (countdownPresetAddBtn) {
-    countdownPresetAddBtn.addEventListener('click', () => {
-      const minutes = Math.max(0, Math.min(180, parseInt(countdownPresetAddMin.value, 10) || 0));
-      const seconds = Math.max(0, Math.min(59, parseInt(countdownPresetAddSec.value, 10) || 0));
-      if (minutes <= 0 && seconds <= 0) return;
-      countdownPresets.push({
-        id: `cdp-${Date.now()}-${Math.random().toString(36).slice(2)}`,
-        minutes,
-        seconds,
-      });
-      saveCountdownPresets();
-      countdownPresetAddMin.value = '';
-      countdownPresetAddSec.value = '';
-      renderCountdownPresets();
-    });
-  }
 </script>
 
 <script>
@@ -12812,10 +10499,7 @@
       requestAnimationFrame(autoGrow);
 
       input.focus();
-      // Metnin tamamını seçili bırakmak yerine imleci sona koyuyoruz;
-      // böylece düzenleme açıldığında yanlışlıkla tüm metni silme riski
-      // olmuyor, kullanıcı ne değiştirmek istiyorsa kendi seçiyor.
-      input.setSelectionRange(input.value.length, input.value.length);
+      input.select();
 
       const commit = () => {
         const value = input.value.trim();
@@ -12855,22 +10539,13 @@
     const addItemRow = () => {
       const row = document.createElement('div');
       row.className = 'page8-add-item-row';
-      const input = document.createElement('textarea');
+      const input = document.createElement('input');
+      input.type = 'text';
       input.className = 'page8-item-input';
       input.placeholder = 'Yeni ekle...';
-      input.rows = 1;
       row.appendChild(input);
       itemList.appendChild(row);
       input.focus();
-
-      // Eklerken de tıpkı düzenlemede olduğu gibi metin uzayınca aşağı
-      // satıra geçtiğini anlık görebilelim; kutunun boyu yazdıkça büyür.
-      const autoGrow = () => {
-        input.style.height = 'auto';
-        input.style.height = input.scrollHeight + 'px';
-      };
-      input.addEventListener('input', autoGrow);
-      requestAnimationFrame(autoGrow);
 
       const commit = () => {
         const value = input.value.trim();
@@ -12883,7 +10558,7 @@
       };
 
       input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); input.blur(); }
+        if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
         else if (e.key === 'Escape') { input.value = ''; input.blur(); }
       });
       input.addEventListener('blur', commit, { once: true });
@@ -13124,11 +10799,6 @@
     // O gün "+ Ders Ekle" ile eklenmiş (henüz sabitlenmemiş) derslerin
     // kimlikleri; sadece o günün sayfasında görünmelerini sağlar.
     dayLists: {},
-    // customSubjectPool: kullanıcının "Kendi dersini yaz…" ile eklediği
-    // branş adlarının kalıcı havuzu. Hazır TYT/AYT branşları gibi artık
-    // "Ders Ekle" pop-up'ında her zaman seçenek olarak listelenir; ilgili
-    // ders tamamen silinirse buradan da çıkarılır (hiç eklenmemiş gibi olur).
-    customSubjectPool: { tyt: [], ayt: [] },
     logs: [] // { id, date:'YYYY-MM-DD', track:'tyt'|'ayt', subjectId, count, ts }
   });
 
@@ -13240,43 +10910,6 @@
   };
 
   const page9NextColor = (track) => WHEEL_PALETTE[page9State.subjects[track].length % WHEEL_PALETTE.length];
-
-  // Bir butona basılı tutulunca adımı tekrar tekrar çalıştırır (ilk basışta
-  // hemen bir kez, kısa bir bekleme sonrasında da hızlıca art arda).
-  // Fare/dokunma (pointer olayları) ile hem "tek tık" hem "basılı tutup
-  // hızlandırma" davranışını tek yerden yönetir; klavye ile tetiklenen
-  // "click" olayları da (pointer olayı olmadığında) ayrıca çalışır.
-  const attachHoldRepeat = (btn, stepFn, { delay = 420, interval = 90 } = {}) => {
-    let holdTimeout = null;
-    let holdInterval = null;
-    let firedByPointer = false;
-
-    const stopHold = () => {
-      if (holdTimeout) { clearTimeout(holdTimeout); holdTimeout = null; }
-      if (holdInterval) { clearInterval(holdInterval); holdInterval = null; }
-      btn.classList.remove('is-pressed');
-    };
-
-    btn.addEventListener('pointerdown', (e) => {
-      if (e.pointerType === 'mouse' && e.button !== 0) return;
-      firedByPointer = true;
-      btn.classList.add('is-pressed');
-      stepFn();
-      stopHold();
-      holdTimeout = setTimeout(() => {
-        holdInterval = setInterval(stepFn, interval);
-      }, delay);
-    });
-
-    ['pointerup', 'pointercancel', 'pointerleave'].forEach((evt) => {
-      btn.addEventListener(evt, stopHold);
-    });
-
-    btn.addEventListener('click', () => {
-      if (firedByPointer) { firedByPointer = false; return; }
-      stepFn();
-    });
-  };
 
   // Seçili tarih + branş için tek bir log kaydını doğrudan istenen sayıya
   // ayarlar (ekleme değil, o günkü toplamı belirleme). count 0 ise kayıt
@@ -13405,12 +11038,6 @@
             entry[page9Track] = entry[page9Track].filter((id) => id !== subject.id);
           }
         });
-        // Kalıcı branş havuzundan da çıkar: bu ders tamamen silindiğinde
-        // "Ders Ekle" pop-up'ında da bir daha hiç eklenmemiş gibi görünmeli.
-        const lower = subject.name.trim().toLowerCase();
-        page9State.customSubjectPool[page9Track] = page9State.customSubjectPool[page9Track].filter(
-          (n) => n.trim().toLowerCase() !== lower
-        );
         savePage9State();
         renderPage9SubjectList();
         renderPage9Summary();
@@ -13446,10 +11073,10 @@
       page9SetCount(subject.id, count);
     };
 
-    attachHoldRepeat(minusBtn, () => {
+    minusBtn.addEventListener('click', () => {
       commitCount((parseInt(input.value, 10) || 0) - 5);
     });
-    attachHoldRepeat(plusBtn, () => {
+    plusBtn.addEventListener('click', () => {
       commitCount((parseInt(input.value, 10) || 0) + 5);
     });
     input.addEventListener('change', () => commitCount(input.value));
@@ -13588,28 +11215,6 @@
     ayt: ['Matematik', 'Fizik', 'Kimya', 'Biyoloji']
   };
 
-  // Geriye dönük uyumluluk: eski kayıtlarda "customSubjectPool" henüz
-  // yoktu. Alanı oluşturuyoruz ve daha önce "Kendi dersini yaz…" ile
-  // eklenmiş (hazır listede olmayan) dersleri geriye dönük olarak havuza
-  // dahil ediyoruz ki bu güncellemeden önce eklenmiş branşlar da artık
-  // kalıcı sayılsın.
-  if (!page9State.customSubjectPool || typeof page9State.customSubjectPool !== 'object') {
-    page9State.customSubjectPool = { tyt: [], ayt: [] };
-  }
-  ['tyt', 'ayt'].forEach((track) => {
-    if (!Array.isArray(page9State.customSubjectPool[track])) page9State.customSubjectPool[track] = [];
-    const presetNames = new Set((PAGE9_PRESET_SUBJECTS[track] || []).map((n) => n.trim().toLowerCase()));
-    const poolNames = new Set(page9State.customSubjectPool[track].map((n) => n.trim().toLowerCase()));
-    page9State.subjects[track].forEach((s) => {
-      const lower = s.name.trim().toLowerCase();
-      if (!presetNames.has(lower) && !poolNames.has(lower)) {
-        page9State.customSubjectPool[track].push(s.name);
-        poolNames.add(lower);
-      }
-    });
-  });
-  savePage9State();
-
   const page9AddBackdrop = document.getElementById('page9AddBackdrop');
   const page9AddSubtitle = document.getElementById('page9AddSubtitle');
   const page9AddClose = document.getElementById('page9AddClose');
@@ -13619,37 +11224,19 @@
   const page9AddCustomBtn = document.getElementById('page9AddCustomBtn');
   const page9AddConfirm = document.getElementById('page9AddConfirm');
 
-  // Pop-up açıkken kullanılan geçici liste: { name, isCustom, fromPool, disabled, selected }.
+  // Pop-up açıkken kullanılan geçici liste: { name, isCustom, disabled, selected }.
   // disabled = o gün için zaten görünen (eklenmiş ya da sabitlenmiş) bir ders.
-  // fromPool = kalıcı branş havuzundan (daha önce "Kendi dersini yaz…" ile
-  // eklenip kaydedilmiş) gelen bir ders; bunlar hazır branşlar gibi her
-  // pop-up açılışında otomatik listelenir ve pop-up içinden tek seferlik
-  // silinemez (kalıcı silme, ana ders listesindeki "×" ile yapılır).
   let page9AddEntries = [];
 
   const page9BuildAddEntries = () => {
     const visibleNames = new Set(page9VisibleSubjects().map((s) => s.name.trim().toLowerCase()));
     const presets = PAGE9_PRESET_SUBJECTS[page9Track] || [];
-    const presetNames = new Set(presets.map((n) => n.trim().toLowerCase()));
-    const pool = (page9State.customSubjectPool[page9Track] || []).filter(
-      (name) => !presetNames.has(name.trim().toLowerCase())
-    );
-    page9AddEntries = [
-      ...presets.map((name) => ({
-        name,
-        isCustom: false,
-        fromPool: false,
-        disabled: visibleNames.has(name.trim().toLowerCase()),
-        selected: false
-      })),
-      ...pool.map((name) => ({
-        name,
-        isCustom: true,
-        fromPool: true,
-        disabled: visibleNames.has(name.trim().toLowerCase()),
-        selected: false
-      }))
-    ];
+    page9AddEntries = presets.map((name) => ({
+      name,
+      isCustom: false,
+      disabled: visibleNames.has(name.trim().toLowerCase()),
+      selected: false
+    }));
   };
 
   const page9UpdateAddConfirmState = () => {
@@ -13667,102 +11254,13 @@
   // Pop-up içeriğini (hazır branşlar + varsa eklenmiş kendi dersleri)
   // baştan çizer. Bir çipe tıklamak seçimi açar/kapatır; zaten o gün
   // görünen bir branş "Eklendi" notuyla devre dışı bırakılır.
-  // ---- Zaten eklenmiş bir dersi pop-up üzerinden çıkarma onayı ----
-  // Bir çip "Eklendi" durumundayken (o gün için zaten görünüyorken)
-  // üzerine tıklanırsa, işareti kaldırmak/o günden çıkarmak istediğinden
-  // emin olmak için önce bu onay pop-up'ı açılır; "Evet" denmeden hiçbir
-  // ders günün listesinden çıkmaz.
-  const page9RemoveConfirmBackdrop = document.getElementById('page9RemoveConfirmBackdrop');
-  const page9RemoveConfirmDesc = document.getElementById('page9RemoveConfirmDesc');
-  const page9RemoveConfirmCancel = document.getElementById('page9RemoveConfirmCancel');
-  const page9RemoveConfirmConfirm = document.getElementById('page9RemoveConfirmConfirm');
-  let page9PendingRemoveName = null;
-
-  const closePage9RemoveConfirm = () => {
-    page9RemoveConfirmBackdrop.classList.remove('is-open');
-    page9PendingRemoveName = null;
-  };
-
-  const openPage9RemoveConfirm = (name) => {
-    page9RemoveConfirmDesc.textContent = `"${name}" bugünün listesinden çıkarılacak.`;
-    page9PendingRemoveName = name;
-    page9RemoveConfirmBackdrop.classList.add('is-open');
-  };
-
-  // Onaylanınca dersi sadece seçili günün listesinden çıkarır (ana ders
-  // tanımı ve kalıcı havuzdaki kaydı silinmez, ders bir dahaki sefere
-  // tekrar eklenebilir olarak kalır).
-  const page9RemoveSubjectFromDay = (rawName) => {
-    const lower = rawName.trim().toLowerCase();
-    const dateKey = page9DateKey(page9SelectedDate);
-    const dayList = page9GetDayList(dateKey, page9Track);
-    const subject = page9State.subjects[page9Track].find(
-      (s) => s.name.trim().toLowerCase() === lower
-    );
-    if (subject) {
-      const i = dayList.indexOf(subject.id);
-      if (i !== -1) dayList.splice(i, 1);
-    }
-    savePage9State();
-    renderPage9SubjectList();
-    page9BuildAddEntries();
-    page9RenderAddGrid();
-    page9UpdateAddConfirmState();
-  };
-
-  // Kullanıcının kendi yazdığı bir dersi her yerden komple siler: ana ders
-  // tanımından, o güne kadar girilen tüm soru sayılarından (logs), tüm
-  // günlerin listelerinden ve kalıcı "kendi dersin" havuzundan — sanki
-  // hiç eklenmemiş gibi. Hazır TYT/AYT branşları için kullanılmaz.
-  const page9DeleteSubjectCompletely = (rawName) => {
-    const lower = rawName.trim().toLowerCase();
-    const list = page9State.subjects[page9Track];
-    const subject = list.find((s) => s.name.trim().toLowerCase() === lower);
-    if (subject) {
-      page9State.subjects[page9Track] = list.filter((s) => s.id !== subject.id);
-      page9State.logs = page9State.logs.filter((log) => log.subjectId !== subject.id);
-      Object.values(page9State.dayLists).forEach((entry) => {
-        if (Array.isArray(entry[page9Track])) {
-          entry[page9Track] = entry[page9Track].filter((id) => id !== subject.id);
-        }
-      });
-    }
-    page9State.customSubjectPool[page9Track] = page9State.customSubjectPool[page9Track].filter(
-      (n) => n.trim().toLowerCase() !== lower
-    );
-    savePage9State();
-    renderPage9SubjectList();
-    renderPage9Summary();
-  };
-
-  if (page9RemoveConfirmCancel) page9RemoveConfirmCancel.addEventListener('click', closePage9RemoveConfirm);
-  if (page9RemoveConfirmBackdrop) {
-    page9RemoveConfirmBackdrop.addEventListener('click', (e) => {
-      if (e.target === page9RemoveConfirmBackdrop) closePage9RemoveConfirm();
-    });
-  }
-  if (page9RemoveConfirmConfirm) {
-    page9RemoveConfirmConfirm.addEventListener('click', () => {
-      const name = page9PendingRemoveName;
-      closePage9RemoveConfirm();
-      if (name) page9RemoveSubjectFromDay(name);
-    });
-  }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && page9RemoveConfirmBackdrop && page9RemoveConfirmBackdrop.classList.contains('is-open')) {
-      closePage9RemoveConfirm();
-    }
-  });
-
-  // Zaten eklenmiş (disabled) bir dersin çipi de artık tıklanabilir:
-  // "Eklendi" yazısı yerine kutucuğu işaretli görünür, üzerine tıklanınca
-  // işareti kaldırmak/o günden çıkarmak isteyip istemediği sorulur.
   const page9RenderAddGrid = () => {
     page9AddGrid.innerHTML = '';
     page9AddEntries.forEach((entry, idx) => {
       const chip = document.createElement('div');
       chip.className = 'page9-add-chip';
-      chip.classList.toggle('is-selected', entry.selected || entry.disabled);
+      chip.classList.toggle('is-selected', entry.selected);
+      chip.classList.toggle('is-disabled', entry.disabled);
 
       const box = document.createElement('span');
       box.className = 'page9-add-chip-box';
@@ -13774,37 +11272,33 @@
       name.textContent = entry.name;
       chip.appendChild(name);
 
-      // Kullanıcının kendi yazdığı (isCustom) dersler, o gün için eklenmiş
-      // olsun ya da olmasın, sağda her zaman bir çarpı ile gösterilir;
-      // basılınca ders komple (her yerden) silinmeden önce onay istenir.
-      // Hazır TYT/AYT branşlarında bu buton hiç gösterilmez.
-      if (entry.isCustom) {
+      if (entry.disabled) {
+        const note = document.createElement('span');
+        note.className = 'page9-add-chip-note';
+        note.textContent = 'Eklendi';
+        chip.appendChild(note);
+      } else if (entry.isCustom) {
         const del = document.createElement('button');
         del.type = 'button';
         del.className = 'delete-btn page9-add-chip-delete';
         del.textContent = '×';
-        del.setAttribute('aria-label', `"${entry.name}" dersini kalıcı olarak sil`);
+        del.setAttribute('aria-label', `"${entry.name}" dersini listeden çıkar`);
         del.addEventListener('click', (e) => {
           e.stopPropagation();
-          openPage8Confirm(entry.name, () => {
-            page9DeleteSubjectCompletely(entry.name);
-            page9BuildAddEntries();
-            page9RenderAddGrid();
-            page9UpdateAddConfirmState();
-          });
+          page9AddEntries.splice(idx, 1);
+          page9RenderAddGrid();
+          page9UpdateAddConfirmState();
         });
         chip.appendChild(del);
       }
 
-      chip.addEventListener('click', () => {
-        if (entry.disabled) {
-          openPage9RemoveConfirm(entry.name);
-        } else {
+      if (!entry.disabled) {
+        chip.addEventListener('click', () => {
           entry.selected = !entry.selected;
           page9RenderAddGrid();
           page9UpdateAddConfirmState();
-        }
-      });
+        });
+      }
 
       page9AddGrid.appendChild(chip);
     });
@@ -13819,65 +11313,19 @@
     page9UpdateAddConfirmState();
   });
 
-  // Verilen isimdeki dersi kalıcı olarak (ana listeye + o günün listesine +
-  // gerekirse kalıcı havuza) ekler. Hem "+" ile tekil ekleme, hem de
-  // "Seçilenleri Ekle" ile toplu ekleme bu ortak fonksiyonu kullanır.
-  const page9CommitSubjectByName = (rawName) => {
-    const name = rawName.trim();
-    if (!name) return null;
-    const lower = name.toLowerCase();
-    const dateKey = page9DateKey(page9SelectedDate);
-    const dayList = page9GetDayList(dateKey, page9Track);
-    const masterList = page9State.subjects[page9Track];
-
-    let subject = masterList.find((s) => s.name.trim().toLowerCase() === lower);
-    if (!subject) {
-      subject = { id: page9GenId(), name, color: page9NextColor(page9Track), pinned: false };
-      masterList.push(subject);
-    }
-    if (!subject.pinned && !dayList.includes(subject.id)) dayList.push(subject.id);
-
-    // Hazır listede olmayan bir ders ise, bir daha "Ders Ekle" pop-up'ını
-    // açtığında da seçenek olarak çıkması için kalıcı havuza kaydediyoruz.
-    const isPreset = (PAGE9_PRESET_SUBJECTS[page9Track] || []).some(
-      (n) => n.trim().toLowerCase() === lower
-    );
-    if (!isPreset) {
-      const pool = page9State.customSubjectPool[page9Track];
-      if (!pool.some((n) => n.trim().toLowerCase() === lower)) pool.push(subject.name);
-    }
-
-    savePage9State();
-    renderPage9SubjectList();
-    return subject;
-  };
-
-  // Kendi ders adını yazıp "+" ile listeye ekler. "+" butonuna dokunulduğu
-  // an ders artık kalıcı olarak eklenmiştir (o günün listesine + ana
-  // listeye işlenir); pop-up'ta seçili olsun ya da olmasın, "Seçilenleri
-  // Ekle"ye basılmadan kapatılsa bile bir daha silinmez. Çip bundan sonra
-  // diğer eklenmiş dersler gibi "Eklendi" notuyla devre dışı görünür.
+  // Kendi ders adını yazıp "+" ile listeye ekler (otomatik seçili gelir).
+  // Aynı isim zaten listede varsa (devre dışı değilse) tekrar eklemek
+  // yerine sadece onu seçili hale getirir.
   const page9AddCustomEntry = () => {
     const raw = page9AddCustomInput.value.trim();
     if (!raw) return;
     const lower = raw.toLowerCase();
     const existing = page9AddEntries.find((e) => e.name.trim().toLowerCase() === lower);
-    if (existing && existing.disabled) {
-      // Zaten eklenmiş, tekrar eklemeye gerek yok.
-      page9AddCustomInput.value = '';
-      page9AddCustomInput.focus();
-      return;
-    }
-
-    page9CommitSubjectByName(raw);
-
     if (existing) {
-      existing.disabled = true;
-      existing.selected = false;
+      if (!existing.disabled) existing.selected = true;
     } else {
-      page9AddEntries.push({ name: raw, isCustom: true, fromPool: false, disabled: true, selected: false });
+      page9AddEntries.push({ name: raw, isCustom: true, disabled: false, selected: true });
     }
-
     page9AddCustomInput.value = '';
     page9RenderAddGrid();
     page9UpdateAddConfirmState();
@@ -13887,26 +11335,6 @@
   page9AddCustomInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') { e.preventDefault(); page9AddCustomEntry(); }
   });
-
-  // Pop-up'ta seçili (işaretli) hazır branşları o günün listesine kalıcı
-  // olarak ekler. Hem "Seçilenleri Ekle" butonuna basıldığında hem de
-  // pop-up kapatılırken (X, dış tıklama veya Escape) çağrılır: böylece bir
-  // branşı seçip pop-up'ı "Seçilenleri Ekle"ye basmadan kapatmak seçimi
-  // sessizce silmez, kullanıcının seçtiği ders her durumda kaydedilir.
-  // ("+" ile eklenen kendi dersleri zaten page9AddCustomEntry içinde anında
-  // kaydedildiği için burada tekrar işlenmelerine gerek yok.)
-  const page9CommitSelectedSubjects = () => {
-    const selected = page9AddEntries.filter((e) => e.selected && !e.disabled);
-    if (!selected.length) return;
-
-    selected.forEach(({ name }) => page9CommitSubjectByName(name));
-
-    // Kaydedilenler artık "Eklendi" notuyla devre dışı görünsün ve tekrar
-    // kaydedilmesin diye pop-up içi seçim listesini tazeliyoruz.
-    page9BuildAddEntries();
-    page9RenderAddGrid();
-    page9UpdateAddConfirmState();
-  };
 
   const openPage9AddPopup = () => {
     page9BuildAddEntries();
@@ -13918,9 +11346,6 @@
   };
 
   const closePage9AddPopup = () => {
-    // Kullanıcı "Seçilenleri Ekle"ye basmadan pop-up'ı kapatsa bile,
-    // o ana kadar işaretlediği dersler kaybolmasın diye önce kaydedilir.
-    page9CommitSelectedSubjects();
     page9AddBackdrop.classList.remove('is-open');
   };
 
@@ -13936,8 +11361,25 @@
   // Aynı isimde ders zaten ana listede varsa (başka bir günde eklenmiş/
   // silinmiş olsa da) yeni bir kopya oluşturmak yerine onu yeniden kullanır.
   page9AddConfirm.addEventListener('click', () => {
-    page9CommitSelectedSubjects();
-    page9AddBackdrop.classList.remove('is-open');
+    const selected = page9AddEntries.filter((e) => e.selected && !e.disabled);
+    if (!selected.length) return;
+    const dateKey = page9DateKey(page9SelectedDate);
+    const dayList = page9GetDayList(dateKey, page9Track);
+    const masterList = page9State.subjects[page9Track];
+
+    selected.forEach(({ name }) => {
+      const lower = name.trim().toLowerCase();
+      let subject = masterList.find((s) => s.name.trim().toLowerCase() === lower);
+      if (!subject) {
+        subject = { id: page9GenId(), name: name.trim(), color: page9NextColor(page9Track), pinned: false };
+        masterList.push(subject);
+      }
+      if (!subject.pinned && !dayList.includes(subject.id)) dayList.push(subject.id);
+    });
+
+    savePage9State();
+    renderPage9SubjectList();
+    closePage9AddPopup();
   });
 
   const renderPage9SubjectList = () => {
@@ -14899,7 +12341,6 @@
   const examDetailBlankCount = document.getElementById('examDetailBlankCount');
   const examDetailSubjectList = document.getElementById('examDetailSubjectList');
   const examDetailBackBtn = document.getElementById('examDetailBackBtn');
-  const examDetailResourcesBtn = document.getElementById('examDetailResourcesBtn');
   const examDetailDeleteBtn = document.getElementById('examDetailDeleteBtn');
   const examDetailPhotoToggleBtn = document.getElementById('examDetailPhotoToggleBtn');
   const page11DetailSection = document.getElementById('page-11-detail');
@@ -15080,8 +12521,6 @@
       card.appendChild(body);
       examDetailSubjectList.appendChild(card);
     });
-
-    page11UpdateResourcesIndicator();
   };
 
   // Bir denemenin tüm sorularını tek bir duruma (ör. hepsi doğru ya da
@@ -15150,130 +12589,6 @@
       savePage11State();
       closeExamDetail();
     });
-  });
-
-  // ---- "Kaynaklar" pop-up'ı: cevap anahtarı (dosya/link) + video çözümü
-  // linki. Deneme nesnesine `resources` alanı olarak kaydedilir:
-  // { answerKeyFile: {name, dataUrl}|null, answerKeyLink: string, videoUrl: string }
-  const examResourcesBackdrop = document.getElementById('examResourcesBackdrop');
-  const examResourcesTabsSegmented = document.getElementById('examResourcesTabsSegmented');
-  const examResourcesTabsSlider = document.getElementById('examResourcesTabsSlider');
-  const examResourcesTabBtns = Array.from(examResourcesTabsSegmented.querySelectorAll('.exam-resources-tab-btn'));
-  const examResourcesAnswerKeyDot = document.getElementById('examResourcesAnswerKeyDot');
-  const examResourcesVideoDot = document.getElementById('examResourcesVideoDot');
-  const examResourcesAnswerKeyPanel = document.getElementById('examResourcesAnswerKeyPanel');
-  const examResourcesVideoPanel = document.getElementById('examResourcesVideoPanel');
-  const examResourcesFileRow = document.getElementById('examResourcesFileRow');
-  const examResourcesFilePickBtn = document.getElementById('examResourcesFilePickBtn');
-  const examResourcesFileName = document.getElementById('examResourcesFileName');
-  const examResourcesFileRemoveBtn = document.getElementById('examResourcesFileRemoveBtn');
-  const examResourcesFileInput = document.getElementById('examResourcesFileInput');
-  const examResourcesAnswerLinkInput = document.getElementById('examResourcesAnswerLinkInput');
-  const examResourcesVideoLinkInput = document.getElementById('examResourcesVideoLinkInput');
-  const examResourcesCancelBtn = document.getElementById('examResourcesCancelBtn');
-  const examResourcesSaveBtn = document.getElementById('examResourcesSaveBtn');
-
-  const EXAM_RESOURCES_FILE_PLACEHOLDER = 'Dosya seç (PDF/görsel)';
-
-  let examResourcesPendingFile = null; // { name, dataUrl } | null
-  let examResourcesActiveTab = 'answerkey';
-
-  const page11UpdateResourcesIndicator = () => {
-    const exam = page11State.exams.find((it) => it.id === page11ActiveExamId);
-    const res = exam && exam.resources;
-    const hasAnswerKey = !!(res && (res.answerKeyFile || res.answerKeyLink));
-    const hasVideo = !!(res && res.videoUrl);
-    examDetailResourcesBtn.classList.toggle('has-resources', hasAnswerKey || hasVideo);
-    return { hasAnswerKey, hasVideo };
-  };
-
-  const updateExamResourcesFileBtnUI = () => {
-    if (examResourcesPendingFile) {
-      examResourcesFileName.textContent = examResourcesPendingFile.name;
-      examResourcesFilePickBtn.classList.add('has-file');
-      examResourcesFileRemoveBtn.classList.remove('is-hidden');
-    } else {
-      examResourcesFileName.textContent = EXAM_RESOURCES_FILE_PLACEHOLDER;
-      examResourcesFilePickBtn.classList.remove('has-file');
-      examResourcesFileRemoveBtn.classList.add('is-hidden');
-    }
-  };
-
-  // "Cevap Anahtarı" ve "Video Çözümü" iki ayrı sekme: her an yalnızca
-  // biri görünür, böylece pop-up her seferinde tek bir işe odaklanır.
-  const setExamResourcesTab = (tab) => {
-    examResourcesActiveTab = tab;
-    examResourcesTabBtns.forEach((btn) => btn.classList.toggle('is-active', btn.dataset.tab === tab));
-    examResourcesTabsSlider.style.transform = tab === 'video' ? 'translateX(100%)' : 'translateX(0)';
-    examResourcesAnswerKeyPanel.classList.toggle('is-active', tab === 'answerkey');
-    examResourcesVideoPanel.classList.toggle('is-active', tab === 'video');
-  };
-
-  examResourcesTabBtns.forEach((btn) => {
-    btn.addEventListener('click', () => setExamResourcesTab(btn.dataset.tab));
-  });
-
-  const openExamResourcesModal = () => {
-    const exam = page11State.exams.find((it) => it.id === page11ActiveExamId);
-    if (!exam) return;
-    const res = exam.resources || {};
-    examResourcesPendingFile = res.answerKeyFile || null;
-    examResourcesAnswerLinkInput.value = res.answerKeyLink || '';
-    examResourcesVideoLinkInput.value = res.videoUrl || '';
-    updateExamResourcesFileBtnUI();
-    examResourcesFileInput.value = '';
-    const { hasAnswerKey, hasVideo } = page11UpdateResourcesIndicator();
-    examResourcesAnswerKeyDot.parentElement.classList.toggle('has-content', hasAnswerKey);
-    examResourcesVideoDot.parentElement.classList.toggle('has-content', hasVideo);
-    setExamResourcesTab('answerkey');
-    examResourcesBackdrop.classList.add('is-open');
-  };
-
-  const closeExamResourcesModal = () => {
-    examResourcesBackdrop.classList.remove('is-open');
-    examResourcesFileInput.value = '';
-  };
-
-  examDetailResourcesBtn.addEventListener('click', openExamResourcesModal);
-  examResourcesCancelBtn.addEventListener('click', closeExamResourcesModal);
-  examResourcesBackdrop.addEventListener('click', (e) => {
-    if (e.target === examResourcesBackdrop) closeExamResourcesModal();
-  });
-
-  examResourcesFilePickBtn.addEventListener('click', () => examResourcesFileInput.click());
-
-  examResourcesFileInput.addEventListener('change', () => {
-    const file = examResourcesFileInput.files && examResourcesFileInput.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = async () => {
-      let dataUrl = reader.result;
-      if (file.type && file.type.startsWith('image/') && typeof compressImageDataUrl === 'function') {
-        dataUrl = await compressImageDataUrl(dataUrl);
-      }
-      examResourcesPendingFile = { name: file.name, dataUrl };
-      updateExamResourcesFileBtnUI();
-    };
-    reader.readAsDataURL(file);
-  });
-
-  examResourcesFileRemoveBtn.addEventListener('click', () => {
-    examResourcesPendingFile = null;
-    examResourcesFileInput.value = '';
-    updateExamResourcesFileBtnUI();
-  });
-
-  examResourcesSaveBtn.addEventListener('click', () => {
-    const exam = page11State.exams.find((it) => it.id === page11ActiveExamId);
-    if (!exam) return;
-    exam.resources = {
-      answerKeyFile: examResourcesPendingFile,
-      answerKeyLink: examResourcesAnswerLinkInput.value.trim(),
-      videoUrl: examResourcesVideoLinkInput.value.trim()
-    };
-    savePage11State();
-    page11UpdateResourcesIndicator();
-    closeExamResourcesModal();
   });
 
   // ---- Yanlış/boş bırakılan soruya görsel ekleme pop-up'ı ----
@@ -15978,61 +13293,18 @@
   // ve doğru cevap şıkkı seçtirilir; onaylanınca kart olarak listeye
   // eklenir. Görseller base64 (data URL) olarak, diğer tüm veriler gibi
   // tek bir APP_STATE anahtarı altında localStorage'a yazılır.
-  // Ders listesi artık tek bir havuz değil, TYT ve AYT için ayrı ayrı
-  // tanımlı: soru eklerken önce sınav türü seçilir, ders etiketleri o
-  // türe göre gösterilir (aşağıdaki qhavuzAllSubjects bkz.).
-  const QHAVUZ_SUBJECTS_BY_TRACK = {
-    tyt: [
-      { name: 'Türkçe', color: '#ff90e8' },
-      { name: 'Matematik', color: '#c9a6ff' },
-      { name: 'Fizik', color: '#ffb46e' },
-      { name: 'Kimya', color: '#9fb8ff' },
-      { name: 'Biyoloji', color: '#8fe3a0' },
-      { name: 'Tarih', color: '#ffd23f' },
-      { name: 'Coğrafya', color: '#6ec6ff' },
-      { name: 'Felsefe', color: '#ff5c5c' },
-      { name: 'Din', color: '#7452a8' }
-    ],
-    ayt: [
-      { name: 'Matematik', color: '#c9a6ff' },
-      { name: 'Fizik', color: '#ffb46e' },
-      { name: 'Kimya', color: '#9fb8ff' },
-      { name: 'Biyoloji', color: '#8fe3a0' }
-    ]
-  };
+  const QHAVUZ_SUBJECTS = [
+    { name: 'Türkçe', color: '#ff90e8' },
+    { name: 'Matematik', color: '#c9a6ff' },
+    { name: 'Fizik', color: '#ffb46e' },
+    { name: 'Kimya', color: '#9fb8ff' },
+    { name: 'Biyoloji', color: '#8fe3a0' },
+    { name: 'Tarih', color: '#ffd23f' },
+    { name: 'Coğrafya', color: '#6ec6ff' },
+    { name: 'Felsefe', color: '#ff5c5c' },
+    { name: 'Din', color: '#7452a8' }
+  ];
   const QHAVUZ_ANSWERS = ['A', 'B', 'C', 'D', 'E'];
-
-  // Soru Havuzu'ndaki ders seçimi artık sabit listeyle sınırlı değil:
-  // Soru Takibi (Sayfa 9) sayfasında "Ders Ekle" ile eklediğiniz her
-  // ders, ait olduğu sınav türünde (TYT/AYT) burada da otomatik seçenek
-  // olarak çıkar; o dersi Soru Takibi'nden tamamen silerseniz burada da
-  // bir daha görünmez. Renk tutarlılığı için Sayfa 9'daki dersin kendi
-  // rengi kullanılır. Bir "track" verilirse sadece o türün dersleri
-  // döner (Soru Ekle pop-up'ında kullanılır); verilmezse geriye dönük
-  // uyumluluk için TYT+AYT birleşik listesi döner (kart/rozet renk
-  // eşleştirmesi gibi track bilgisi olmayan eski kayıtlar için).
-  const qhavuzAllSubjects = (track) => {
-    const tracks = track ? [track] : ['tyt', 'ayt'];
-    const seen = new Set();
-    const list = [];
-    tracks.forEach((t) => {
-      (QHAVUZ_SUBJECTS_BY_TRACK[t] || []).forEach((s) => {
-        const lower = s.name.trim().toLowerCase();
-        if (seen.has(lower)) return;
-        seen.add(lower);
-        list.push(s);
-      });
-    });
-    tracks.forEach((t) => {
-      (page9State.subjects[t] || []).forEach((s) => {
-        const lower = s.name.trim().toLowerCase();
-        if (seen.has(lower)) return;
-        seen.add(lower);
-        list.push({ name: s.name, color: s.color || '#c9a6ff' });
-      });
-    });
-    return list;
-  };
 
   const qhavuzGenId = () => 'soru-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
@@ -16053,7 +13325,6 @@
   const qhavuzAddBackdrop = document.getElementById('qhavuzAddBackdrop');
   const qhavuzAddClose = document.getElementById('qhavuzAddClose');
   const qhavuzAddPreviewImg = document.getElementById('qhavuzAddPreviewImg');
-  const qhavuzAddTrackGrid = document.getElementById('qhavuzAddTrackGrid');
   const qhavuzAddSubjectGrid = document.getElementById('qhavuzAddSubjectGrid');
   const qhavuzAddAnswerGrid = document.getElementById('qhavuzAddAnswerGrid');
   const qhavuzAddBookInput = document.getElementById('qhavuzAddBookInput');
@@ -16061,49 +13332,17 @@
   const qhavuzAddConfirm = document.getElementById('qhavuzAddConfirm');
 
   // Pop-up açıkken seçilen değerler; hepsi doluymadan "Kaydet" pasif kalır.
-  // Sınav türü (track) seçilmeden ders listesi boş kalır; track
-  // değiştiğinde önceki ders seçimi sıfırlanır (bir derse iki türde de
-  // aynı ada sahip olsa bile seçim her zaman track'e göre yeniden yapılır).
   let qhavuzPendingImage = null;
-  let qhavuzPendingTrack = null;
   let qhavuzPendingSubject = null;
   let qhavuzPendingAnswer = null;
 
   const qhavuzUpdateConfirmState = () => {
-    qhavuzAddConfirm.disabled = !(qhavuzPendingImage && qhavuzPendingTrack && qhavuzPendingSubject && qhavuzPendingAnswer);
-  };
-
-  const qhavuzBuildTrackGrid = () => {
-    qhavuzAddTrackGrid.innerHTML = '';
-    ['tyt', 'ayt'].forEach((track) => {
-      const chip = document.createElement('button');
-      chip.type = 'button';
-      chip.className = 'qhavuz-add-subject-chip';
-      chip.style.setProperty('--qhavuz-chip-color', '#ffd23f');
-      chip.textContent = PAGE9_TRACK_LABELS[track];
-      if (qhavuzPendingTrack === track) chip.classList.add('is-selected');
-      chip.addEventListener('click', () => {
-        if (qhavuzPendingTrack === track) return;
-        qhavuzPendingTrack = track;
-        qhavuzPendingSubject = null;
-        qhavuzBuildTrackGrid();
-        qhavuzBuildSubjectGrid();
-        qhavuzUpdateConfirmState();
-      });
-      qhavuzAddTrackGrid.appendChild(chip);
-    });
+    qhavuzAddConfirm.disabled = !(qhavuzPendingImage && qhavuzPendingSubject && qhavuzPendingAnswer);
   };
 
   const qhavuzBuildSubjectGrid = () => {
     qhavuzAddSubjectGrid.innerHTML = '';
-    if (!qhavuzPendingTrack) {
-      const hint = document.createElement('span');
-      hint.className = 'qhavuz-add-label-optional';
-      hint.textContent = 'Önce sınav türünü seç';
-      qhavuzAddSubjectGrid.appendChild(hint);
-      return;
-    }
-    qhavuzAllSubjects(qhavuzPendingTrack).forEach((subj) => {
+    QHAVUZ_SUBJECTS.forEach((subj) => {
       const chip = document.createElement('button');
       chip.type = 'button';
       chip.className = 'qhavuz-add-subject-chip';
@@ -16139,13 +13378,11 @@
 
   const openQhavuzAddModal = (imageDataUrl) => {
     qhavuzPendingImage = imageDataUrl;
-    qhavuzPendingTrack = null;
     qhavuzPendingSubject = null;
     qhavuzPendingAnswer = null;
     qhavuzAddPreviewImg.src = imageDataUrl;
     qhavuzAddBookInput.value = '';
     qhavuzAddPageInput.value = '';
-    qhavuzBuildTrackGrid();
     qhavuzBuildSubjectGrid();
     qhavuzBuildAnswerGrid();
     qhavuzUpdateConfirmState();
@@ -16155,7 +13392,6 @@
   const closeQhavuzAddModal = () => {
     qhavuzAddBackdrop.classList.remove('is-open');
     qhavuzPendingImage = null;
-    qhavuzPendingTrack = null;
     qhavuzPendingSubject = null;
     qhavuzPendingAnswer = null;
     qhavuzAddBookInput.value = '';
@@ -16187,7 +13423,7 @@
   });
 
   qhavuzAddConfirm.addEventListener('click', async () => {
-    if (!qhavuzPendingImage || !qhavuzPendingTrack || !qhavuzPendingSubject || !qhavuzPendingAnswer) return;
+    if (!qhavuzPendingImage || !qhavuzPendingSubject || !qhavuzPendingAnswer) return;
     const book = qhavuzAddBookInput.value.trim();
     const page = qhavuzAddPageInput.value.trim();
     // Ham base64 yerine görsel IndexedDB'ye Blob olarak yazılır; APP_STATE
@@ -16196,7 +13432,6 @@
     qhavuzState.items.unshift({
       id: qhavuzGenId(),
       image: imageRef,
-      track: qhavuzPendingTrack,
       subject: qhavuzPendingSubject,
       answer: qhavuzPendingAnswer,
       book: book || null,
@@ -16209,16 +13444,8 @@
   });
 
   const qhavuzSubjectColor = (name) => {
-    const match = qhavuzAllSubjects().find((s) => s.name === name);
+    const match = QHAVUZ_SUBJECTS.find((s) => s.name === name);
     return match ? match.color : '#ff90e8';
-  };
-
-  // Kart/rozet üzerinde gösterilecek etiket: track bilgisi varsa
-  // "TYT · Matematik" gibi sınav türüyle birlikte, yoksa (eski kayıtlar)
-  // sadece ders adıyla gösterilir.
-  const qhavuzSubjectLabel = (item) => {
-    const trackLabel = item && item.track ? PAGE9_TRACK_LABELS[item.track] : null;
-    return trackLabel ? `${trackLabel} · ${item.subject}` : item.subject;
   };
 
   // ---- Soru Havuzu: Düzenleme modu ----
@@ -16476,7 +13703,7 @@
       const subjectBadge = document.createElement('span');
       subjectBadge.className = 'qhavuz-card-subject';
       subjectBadge.style.background = qhavuzSubjectColor(item.subject);
-      subjectBadge.textContent = qhavuzSubjectLabel(item);
+      subjectBadge.textContent = item.subject;
 
       const answerBadge = document.createElement('span');
       answerBadge.className = 'qhavuz-card-answer';
@@ -16492,20 +13719,11 @@
       if (item.book || item.page) {
         const bookLine = document.createElement('span');
         bookLine.className = 'qhavuz-card-book';
-
-        if (item.book) {
-          const bookName = document.createElement('span');
-          bookName.className = 'qhavuz-card-book-name';
-          bookName.textContent = item.book;
-          bookLine.appendChild(bookName);
-        }
-        if (item.page) {
-          const bookPage = document.createElement('span');
-          bookPage.className = 'qhavuz-card-book-page';
-          bookPage.textContent = item.book ? `· s. ${item.page}` : `s. ${item.page}`;
-          bookLine.appendChild(bookPage);
-        }
-
+        bookLine.textContent = item.book && item.page
+          ? `${item.book} · s. ${item.page}`
+          : item.book
+            ? item.book
+            : `s. ${item.page}`;
         card.appendChild(bookLine);
       }
 
@@ -16545,15 +13763,7 @@
   };
 
   // ---- İlk render ----
-  // NOT: resolveImageSrc / openImageDB gibi görsel yardımcıları dosyanın
-  // en altındaki ayrı bir <script> bloğunda tanımlanıyor. Sayfa ilk
-  // açıldığında renderQhavuzGrid() hemen çağrılırsa o fonksiyonlar henüz
-  // tanımlanmamış oluyordu; bu yüzden uygulama yeniden açıldığında
-  // eklenmiş sorular görünmüyor, yeni bir soru eklenip liste tekrar
-  // çizilince (o an tüm script'ler zaten yüklenmiş olduğu için) hepsi
-  // birden ortaya çıkıyordu. DOMContentLoaded'a kadar bekleyerek tüm
-  // script bloklarının çalışmış olmasını garantiliyoruz.
-  document.addEventListener('DOMContentLoaded', renderQhavuzGrid);
+  renderQhavuzGrid();
 
 
   // ---------- Soru Havuzu: Test Modu ----------
@@ -16599,7 +13809,7 @@
       : qhavuzState.items.filter((it) => it.subject === name).length
   );
 
-  const qhavuzAllBranchNames = () => qhavuzAllSubjects()
+  const qhavuzAllBranchNames = () => QHAVUZ_SUBJECTS
     .filter((subj) => qhavuzCountForBranch(subj.name) > 0)
     .map((subj) => subj.name);
 
@@ -16656,7 +13866,7 @@
     };
 
     buildChip(QHAVUZ_ALL_BRANCHES, 'Tüm Branşlar');
-    qhavuzAllSubjects().forEach((subj) => buildChip(subj.name, subj.name));
+    QHAVUZ_SUBJECTS.forEach((subj) => buildChip(subj.name, subj.name));
   };
 
   const openQhavuzTestSetup = () => {
@@ -16692,7 +13902,7 @@
     const item = qhavuzTestQuestions[qhavuzTestIndex];
     qhavuzTestAnswered = false;
     qhavuzTestProgress.textContent = `${qhavuzTestIndex + 1}/${qhavuzTestQuestions.length}`;
-    qhavuzTestSubjectBadge.textContent = qhavuzSubjectLabel(item);
+    qhavuzTestSubjectBadge.textContent = item.subject;
     qhavuzTestSubjectBadge.style.background = qhavuzSubjectColor(item.subject);
     qhavuzTestImgZoom.reset();
     qhavuzTestImg.src = '';
@@ -16906,39 +14116,9 @@
   // Uygulamayı çevrimdışı çalışır ve "gerçek uygulama" gibi açılır hale
   // getirir. file:// üzerinden açıldığında service worker desteklenmez;
   // bu yalnızca https:// veya localhost üzerinden yayınlandığında etkinleşir.
-  //
-  // NOT: index.html artık service worker içinde network-first sunuluyor
-  // (bkz. service-worker.js), bu yüzden içerik güncellemeleri normalde
-  // bir sonraki sayfa açılışında zaten görünür. Ama service-worker.js'in
-  // KENDİSİ değiştiğinde (ör. CACHE_VERSION bump'landığında) tarayıcının
-  // yeni worker'ı devreye alması için normalde bir sayfa yenilemesi
-  // gerekir; aşağıdaki kod bunu kullanıcı adına otomatik yapar.
   if ('serviceWorker' in navigator) {
-    let hasAutoReloaded = false;
-
-    // Yeni bir service worker kontrolü ele aldığında (güncelleme sonrası)
-    // sayfayı bir kez otomatik yeniler; böylece kullanıcı elle önbellek
-    // temizlemek zorunda kalmaz.
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (hasAutoReloaded) return;
-      hasAutoReloaded = true;
-      location.reload();
-    });
-
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js').then((registration) => {
-        // Sayfa her yüklendiğinde ve uygulama her ön plana geldiğinde
-        // arka planda yeni bir service worker sürümü var mı diye
-        // kontrol eder (tarayıcı bunu kendiliğinden günde en fazla bir
-        // kez yapar; bu ek kontrol, geliştirme/yayın sonrası daha hızlı
-        // yansımasını sağlar).
-        registration.update().catch(() => {});
-        document.addEventListener('visibilitychange', () => {
-          if (document.visibilityState === 'visible') {
-            registration.update().catch(() => {});
-          }
-        });
-      }).catch((err) => {
+      navigator.serviceWorker.register('service-worker.js').catch((err) => {
         console.warn('Service worker kaydı başarısız:', err);
       });
     });
@@ -16946,18 +14126,10 @@
 </script>
 
 <script>
-  // ================= Yerel Depolama + Dışa/İçe Aktarma =================
+  // ================= Yerel Yedekleme (localStorage + IndexedDB) =================
   // Bu bölüm; görsellerin kaliteyi bozmadan sıkıştırılmasını ve
-  // görsellerin IndexedDB'de saklanmasını yönetir. Varsayılan depo yerel
-  // (localStorage + IndexedDB) olsa da bu, verinin "yalnızca bu cihazda"
-  // kalmak zorunda olduğu anlamına gelmiyor: aşağıdaki dışa/içe aktarma
-  // fonksiyonları (exportBackup / importBackupFromFile), tüm APP_STATE'i
-  // ve tüm görselleri (base64 olarak) tek bir JSON dosyasına paketleyip
-  // geri yükleyebiliyor. Böylece kullanıcı bugün verisini elle bir
-  // dosya üzerinden başka bir cihaza taşıyabilir; ileride gerçek bir
-  // sunucu/bulut senkronizasyonu eklenmek istendiğinde de aynı JSON
-  // şeması (schemaVersion + deviceId + updatedAt alanları) doğrudan
-  // kullanılabilir — mimari buna göre kuruldu.
+  // görsellerin IndexedDB'de saklanmasını yönetir. Tüm veriler yalnızca
+  // bu cihazda (localStorage ve IndexedDB) tutulur.
 
   // ---- Görsel sıkıştırma ----
   // Uzun kenarı 1600px'i geçen görseller orantılı küçültülür ve JPEG
@@ -17057,63 +14229,6 @@
     }
   };
 
-  // idbPutImageBlob'un aksine, verilen kimliği OLDUĞU GİBİ kullanır
-  // (üzerine yazar). Yedek geri yüklenirken APP_STATE içindeki
-  // "idb://<id>" referanslarının bozulmaması için gereklidir.
-  const idbPutImageBlobWithId = async (id, blob) => {
-    const db = await openImageDB();
-    if (!db) return false;
-    try {
-      await new Promise((resolve, reject) => {
-        const tx = db.transaction(IDB_STORE, 'readwrite');
-        tx.objectStore(IDB_STORE).put(blob, id);
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
-      });
-      return true;
-    } catch (err) {
-      return false;
-    }
-  };
-
-  // Depodaki tüm görselleri {id, blob} olarak döndürür. Dışa aktarma
-  // (yedekleme) sırasında, APP_STATE'te referansı unutulmuş olsa bile
-  // hiçbir görselin kaybolmamasını sağlamak için tüm store taranır.
-  const idbGetAllEntries = async () => {
-    const db = await openImageDB();
-    if (!db) return [];
-    return new Promise((resolve) => {
-      try {
-        const entries = [];
-        const tx = db.transaction(IDB_STORE, 'readonly');
-        const store = tx.objectStore(IDB_STORE);
-        const cursorReq = store.openCursor();
-        cursorReq.onsuccess = (e) => {
-          const cursor = e.target.result;
-          if (cursor) {
-            entries.push({ id: cursor.key, blob: cursor.value });
-            cursor.continue();
-          } else {
-            resolve(entries);
-          }
-        };
-        cursorReq.onerror = () => resolve(entries);
-      } catch (err) {
-        resolve([]);
-      }
-    });
-  };
-
-  // Blob -> base64 data URL (dataUrlToBlob'un tersi). Dışa aktarma
-  // sırasında görselleri taşınabilir tek bir JSON dosyasına gömmek için
-  // kullanılır.
-  const blobToDataUrl = (blob) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(blob);
-  });
-
   const idbGetImageBlob = async (id) => {
     const db = await openImageDB();
     if (!db) return null;
@@ -17171,10 +14286,7 @@
     if (resolvedImageUrlCache.has(ref)) return resolvedImageUrlCache.get(ref);
     const id = ref.slice('idb://'.length);
     const blob = await idbGetImageBlob(id);
-    if (!blob) {
-      console.warn(`Görsel bulunamadı (idb://${id}); silinmiş veya bir yedek geri yüklemesi sırasında taşınamamış olabilir.`);
-      return '';
-    }
+    if (!blob) return '';
     const url = URL.createObjectURL(blob);
     resolvedImageUrlCache.set(ref, url);
     return url;
@@ -17193,194 +14305,6 @@
     await idbDeleteImage(ref.slice('idb://'.length));
   };
 
-  // ================= Yedeği Dışa/İçe Aktarma =================
-  // Tüm APP_STATE + tüm görseller (IndexedDB) tek bir .json dosyasında
-  // paketlenir/geri yüklenir. Bu, kullanıcının verisini başka bir
-  // cihaza/tarayıcıya taşıyabildiği, tarayıcı verisi silinse bile
-  // elinde tutabildiği ve ileride kurulacak gerçek bir bulut
-  // senkronizasyonunun da üzerine inşa edilebileceği ortak formattır.
-
-  const BACKUP_FILENAME_PREFIX = 'takvimim-yedek';
-
-  const exportBackup = async () => {
-    try {
-      const rawState = localStorage.getItem(APP_STORAGE_KEY);
-      const appStateSnapshot = rawState ? JSON.parse(rawState) : {};
-
-      const entries = await idbGetAllEntries();
-      const images = {};
-      for (const { id, blob } of entries) {
-        try {
-          images[`idb://${id}`] = await blobToDataUrl(blob);
-        } catch (err) {
-          console.warn(`Görsel dışa aktarılamadı (idb://${id}):`, err);
-        }
-      }
-
-      const payload = {
-        schemaVersion: APP_SCHEMA_VERSION,
-        exportedAt: new Date().toISOString(),
-        deviceId: getOrCreateDeviceId(),
-        appState: appStateSnapshot,
-        images,
-      };
-
-      const json = JSON.stringify(payload);
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const dateStamp = new Date().toISOString().slice(0, 10);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${BACKUP_FILENAME_PREFIX}-${dateStamp}.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 4000);
-
-      showAppToast('Yedek indirildi');
-      return true;
-    } catch (err) {
-      console.warn('Yedek dışa aktarılamadı:', err);
-      showAppToast('Yedek oluşturulamadı. Lütfen tekrar deneyin.', 'error');
-      return false;
-    }
-  };
-
-  // Bir yedek dosyasını (File) okuyup doğrular; geçerliyse mevcut tüm
-  // veriyi bunun üzerine yazar ve sayfayı yeniden yükler. Onay,
-  // çağıran arayüz kodu tarafından (bkz. Ayarlar sayfası) kullanıcıya
-  // sorulduktan sonra bu fonksiyon çağrılmalıdır.
-  const importBackupFromFile = async (file) => {
-    let payload;
-    try {
-      const text = await file.text();
-      payload = JSON.parse(text);
-    } catch (err) {
-      showAppToast('Dosya okunamadı: geçerli bir yedek dosyası değil.', 'error');
-      return false;
-    }
-
-    if (!payload || typeof payload !== 'object' || typeof payload.appState !== 'object') {
-      showAppToast('Geçersiz yedek dosyası.', 'error');
-      return false;
-    }
-
-    try {
-      const images = payload.images && typeof payload.images === 'object' ? payload.images : {};
-      for (const [ref, dataUrl] of Object.entries(images)) {
-        if (!ref.startsWith('idb://') || typeof dataUrl !== 'string') continue;
-        const id = ref.slice('idb://'.length);
-        try {
-          const blob = await dataUrlToBlob(dataUrl);
-          await idbPutImageBlobWithId(id, blob);
-        } catch (err) {
-          console.warn(`Görsel geri yüklenemedi (${ref}):`, err);
-        }
-      }
-
-      const restoredState = { ...payload.appState, schemaVersion: APP_SCHEMA_VERSION, updatedAt: new Date().toISOString() };
-      localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(restoredState));
-      showAppToast('Yedek geri yüklendi, uygulama yenileniyor…');
-      setTimeout(() => location.reload(), 700);
-      return true;
-    } catch (err) {
-      console.warn('Yedek içe aktarılamadı:', err);
-      showAppToast('Yedek geri yüklenemedi. Depolama alanı dolu olabilir.', 'error');
-      return false;
-    }
-  };
-
-  // ---- Ayarlar > Veri: Dışa/İçe aktarma butonlarını bağla ----
-  const settingsExportBtn = document.getElementById('settingsExportBtn');
-  const settingsImportBtn = document.getElementById('settingsImportBtn');
-  const settingsImportFileInput = document.getElementById('settingsImportFileInput');
-  const importConfirmBackdrop = document.getElementById('importConfirmBackdrop');
-  const importConfirmCancel = document.getElementById('importConfirmCancel');
-  const importConfirmConfirm = document.getElementById('importConfirmConfirm');
-
-  if (settingsExportBtn) {
-    settingsExportBtn.addEventListener('click', () => { exportBackup(); });
-  }
-
-  if (settingsImportBtn && settingsImportFileInput) {
-    settingsImportBtn.addEventListener('click', () => settingsImportFileInput.click());
-  }
-
-  // Seçilen dosyayı hemen içe aktarmadan önce, verileri sıfırlamayla aynı
-  // brütalist onay pop-up'ını göster (üzerine yazma geri alınamaz).
-  let pendingImportFile = null;
-
-  if (settingsImportFileInput) {
-    settingsImportFileInput.addEventListener('change', () => {
-      const file = settingsImportFileInput.files && settingsImportFileInput.files[0];
-      settingsImportFileInput.value = '';
-      if (!file) return;
-      pendingImportFile = file;
-      if (importConfirmBackdrop) importConfirmBackdrop.classList.add('is-open');
-    });
-  }
-
-  if (importConfirmCancel) {
-    importConfirmCancel.addEventListener('click', () => {
-      pendingImportFile = null;
-      if (importConfirmBackdrop) importConfirmBackdrop.classList.remove('is-open');
-    });
-  }
-
-  if (importConfirmBackdrop) {
-    importConfirmBackdrop.addEventListener('click', (e) => {
-      if (e.target === importConfirmBackdrop) {
-        pendingImportFile = null;
-        importConfirmBackdrop.classList.remove('is-open');
-      }
-    });
-  }
-
-  if (importConfirmConfirm) {
-    importConfirmConfirm.addEventListener('click', async () => {
-      const file = pendingImportFile;
-      pendingImportFile = null;
-      if (importConfirmBackdrop) importConfirmBackdrop.classList.remove('is-open');
-      if (file) await importBackupFromFile(file);
-    });
-  }
-
-  // ---- Klavye açıkken odaklanılan giriş alanını görünür tutma ----
-  // Uzun sayfalarda (ör. Gündelik) bir metin kutusuna dokunulduğunda
-  // sanal klavye ekranın alt kısmını kapatıyor ve yazdığımız input
-  // klavyenin arkasında kalıp görünmez oluyordu. Klavye açıldığında
-  // (visualViewport küçüldüğünde) ve/veya bir input/textarea'ya her
-  // odaklanıldığında, o alanı ekranın görünür kısmına kaydırıyoruz.
-  (function () {
-    const scrollFocusedIntoView = () => {
-      const el = document.activeElement;
-      if (!el) return;
-      const tag = el.tagName;
-      if (tag !== 'INPUT' && tag !== 'TEXTAREA') return;
-      el.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    };
-
-    if (window.visualViewport) {
-      let lastHeight = window.visualViewport.height;
-      window.visualViewport.addEventListener('resize', () => {
-        const vv = window.visualViewport;
-        // Yükseklik belirgin şekilde küçüldüyse klavye açılmış demektir.
-        if (vv.height < lastHeight - 80) {
-          setTimeout(scrollFocusedIntoView, 60);
-        }
-        lastHeight = vv.height;
-      });
-    }
-
-    // visualViewport olayı bazı tarayıcılarda gecikebildiği ya da hiç
-    // tetiklenmeyebildiği için, klavye animasyonu bittikten kısa süre
-    // sonra odaklanma anında da ayrıca bir deneme yapalım.
-    document.addEventListener('focusin', (e) => {
-      const tag = e.target && e.target.tagName;
-      if (tag !== 'INPUT' && tag !== 'TEXTAREA') return;
-      setTimeout(scrollFocusedIntoView, 320);
-    });
-  })();
 </script>
 
 </body>
